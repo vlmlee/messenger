@@ -1,7 +1,7 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 import { Message } from '../../messages/models/messages.model';
 
-@ObjectType()
+@InputType()
 export class NewUser {
     @Field({ nullable: true })
     name: string;
