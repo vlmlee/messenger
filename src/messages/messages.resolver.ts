@@ -3,7 +3,7 @@ import { MessageService } from './messages.service';
 import { Message } from './models/messages.model';
 import { NewMessage } from './models/newMessage.model';
 
-@Resolver('Message')
+@Resolver(of => Message)
 export class MessageResolver {
     constructor(private readonly messageService: MessageService) {}
 

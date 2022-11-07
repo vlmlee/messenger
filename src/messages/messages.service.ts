@@ -3,11 +3,12 @@ import { PrismaService } from '../prisma.service';
 import { Message } from './models/messages.model';
 import { NewMessage } from './models/newMessage.model';
 
+@Injectable()
 export class MessageService {
     constructor(private prisma: PrismaService) {}
 
     async getMessage(id: number): Promise<Message | null> {
-        return this.prisma.message.findUnique({
+        return await this.prisma.message.findUnique({
             where: {
                 id: id
             }
@@ -15,11 +16,11 @@ export class MessageService {
     }
 
     async getAllMessages(): Promise<Message[]> {
-        return this.prisma.message.findMany({});
+        return await this.prisma.message.findMany({});
     }
 
     async getAllMessagesByUserId(userId: number): Promise<Message[]> {
-        return this.prisma.message.findMany({
+        return await this.prisma.message.findMany({
             where: {
                 userId: userId
             }
@@ -27,13 +28,13 @@ export class MessageService {
     }
 
     async postMessage(input: NewMessage): Promise<Message> {
-        return this.prisma.message.create({
+        return await this.prisma.message.create({
             data: input
         });
     }
 
     async deleteMessage(id: number): Promise<Message> {
-        return this.prisma.message.delete({
+        return await this.prisma.message.delete({
             where: {
                 id: id
             }
