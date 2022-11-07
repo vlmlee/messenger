@@ -18,7 +18,7 @@ export class MessageResolver {
     }
 
     @Mutation(returns => Message)
-    async postMessage(input: NewMessage): Promise<Message> {
+    async postMessage(@Args('input') input: NewMessage): Promise<Message> {
         return this.messageService.postMessage(input);
     }
 

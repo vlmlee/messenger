@@ -30,6 +30,16 @@ type User {
   messages: [Message!]!
 }
 
+input MessageInput {
+  id: Int!
+
+  """
+  A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+  """
+  DateTime: DateTime!
+  content: String!
+}
+
 type Query {
   getMessage: Message!
   getAllMessages: [Message!]!
@@ -37,7 +47,21 @@ type Query {
 }
 
 type Mutation {
-  postMessage: Message!
+  postMessage(input: NewMessageInput!): Message!
   deleteMessage(id: Float!): Message!
-  createUser: User!
+  createUser(user: NewUserInput!): User!
+}
+
+input NewMessageInput {
+  content: String!
+
+  """
+  The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+  """
+  Int: Float!
+}
+
+input NewUserInput {
+  name: String
+  messages: [MessageInput!]!
 }

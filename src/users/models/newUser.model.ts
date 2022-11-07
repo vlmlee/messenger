@@ -7,6 +7,6 @@ export class NewUser {
     @Field({ nullable: true })
     name: string;
 
-    @Field(type => [Message], { nullable: true })
-    messages: Message[];
+    @Field(() => [Message])
+    messages?: Message[];
 }

@@ -19,7 +19,7 @@ export class UserService {
         return await this.prisma.user.create({
             data: {
                 name: user.name,
-                messages: null
+                messages: undefined
             }
         });
     }
