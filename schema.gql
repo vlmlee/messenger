@@ -12,6 +12,7 @@ type Message {
   """
   DateTime: DateTime!
   content: String!
+  userId: Int!
 }
 
 """
@@ -38,10 +39,11 @@ input MessageInput {
   """
   DateTime: DateTime!
   content: String!
+  userId: Int!
 }
 
 type Query {
-  getMessage: Message!
+  getMessage(id: Int!): Message!
   getAllMessages: [Message!]!
   user(id: Int!): User!
 }

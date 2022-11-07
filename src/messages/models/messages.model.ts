@@ -11,4 +11,7 @@ export class Message {
 
     @Field()
     content: string;
+
+    @Field(type => Int)
+    userId: number;
 }

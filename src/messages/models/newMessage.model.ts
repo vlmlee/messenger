@@ -6,6 +6,6 @@ export class NewMessage {
     @Field()
     content: string;
 
-    @Field(Int)
+    @Field(type => Int)
     userId: number;
 }

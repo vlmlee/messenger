@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { MessageService } from './messages.service';
 import { Message } from './models/messages.model';
 import { NewMessage } from './models/newMessage.model';
@@ -8,7 +8,7 @@ export class MessageResolver {
     constructor(private readonly messageService: MessageService) {}
 
     @Query(returns => Message)
-    async getMessage(id: number): Promise<Message> {
+    async getMessage(@Args('id', { type: () => Int }) id: number): Promise<Message> {
         return this.messageService.getMessage(id);
     }
 
