@@ -1,10 +1,13 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, GraphQLISODateTime, Int, ObjectType } from '@nestjs/graphql';
 import { Message } from '../../messages/models/messages.model';
 
 @ObjectType()
 export class User {
     @Field(type => Int)
     id: number;
+
+    @Field(GraphQLISODateTime)
+    createdAt: Date;
 
     @Field({ nullable: true })
     name: string;
