@@ -7,9 +7,9 @@ import { NewMessage } from './models/newMessage.model';
 export class MessageResolver {
     constructor(private readonly messageService: MessageService) {}
 
-    @Query('getAllMessagesByUserId')
-    async getAllMessagesByUserId(userId: number): Promise<Message[]> {
-        return this.messageService.getAllMessagesByUserId(userId);
+    @Query('getMessage')
+    async getMessage(id: number): Promise<Message> {
+        return this.messageService.getMessage(id);
     }
 
     @Query('getAllMessages')
