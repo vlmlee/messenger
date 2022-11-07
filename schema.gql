@@ -34,4 +34,5 @@ type Query {
 type Mutation {
   postMessage: Message!
   deleteMessage(id: Float!): Message!
+  createUser: User!
 }
