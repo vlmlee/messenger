@@ -4,4 +4,7 @@ import { InputType, Field, Int } from '@nestjs/graphql';
 export class NewMessage {
     @Field()
     content: string;
+
+    @Field(Int)
+    userId: number;
 }
