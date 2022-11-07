@@ -16,7 +16,9 @@ import { upperDirectiveTransformer } from './common/directives/upper-case.direct
             driver: ApolloDriver,
             autoSchemaFile: 'schema.gql',
             transformSchema: schema => upperDirectiveTransformer(schema, 'upper'),
-            installSubscriptionHandlers: true,
+            subscriptions: {
+                'graphql-ws': true
+            },
             buildSchemaOptions: {
                 directives: [
                     new GraphQLDirective({
