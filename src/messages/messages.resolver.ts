@@ -7,22 +7,22 @@ import { NewMessage } from './models/newMessage.model';
 export class MessageResolver {
     constructor(private readonly messageService: MessageService) {}
 
-    @Query('getMessage')
+    @Query(returns => Message)
     async getMessage(id: number): Promise<Message> {
         return this.messageService.getMessage(id);
     }
 
-    @Query('getAllMessages')
+    @Query(returns => [Message])
     async getAllMessages(): Promise<Message[]> {
         return this.messageService.getAllMessages();
     }
 
-    @Mutation('postMessage')
+    @Mutation(returns => Message)
     async postMessage(input: NewMessage): Promise<Message> {
         return this.messageService.postMessage(input);
     }
 
-    @Mutation('deleteMessage')
+    @Mutation(returns => Message)
     async deleteMessage(@Args('id') id: number): Promise<Message> {
         return this.messageService.deleteMessage(id);
     }
