@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Channel from '~components/Channel';
+import Channel from './Channel';
 import { ISidebar } from 'typings';
 
 const Sidebar = ({ channels }: ISidebar) => {

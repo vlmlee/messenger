@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IChannel } from '~typings';
+import { IChannel } from '../typings';
 
 const Channel = ({ user, friend }: IChannel) => (
     <div>

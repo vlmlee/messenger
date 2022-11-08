@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import ChatMessage from '~components/ChatMessage';
-import { IChatWindow } from '~typings';
+import ChatMessage from './ChatMessage';
+import { IChatWindow } from 'typings';
 
 const ChatWindow = ({ friend }: IChatWindow) => {
     const [messages, setMessages] = useState([]); // order messages by date to display them correctly
