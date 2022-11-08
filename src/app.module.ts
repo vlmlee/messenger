@@ -7,6 +7,8 @@ import { MessageModule } from './messages/messages.module';
 import { UserModule } from './users/users.module';
 import { DirectiveLocation, GraphQLDirective } from 'graphql';
 import { upperDirectiveTransformer } from './common/directives/upper-case.directive';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
     imports: [
@@ -27,6 +29,9 @@ import { upperDirectiveTransformer } from './common/directives/upper-case.direct
                     })
                 ]
             }
+        }),
+        ServeStaticModule.forRoot({
+            rootPath: join(__dirname, '..', 'client')
         })
     ],
     controllers: [AppController],
