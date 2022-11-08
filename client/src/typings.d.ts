@@ -1,6 +1,6 @@
 export interface IChannel {
-    user?: string;
-    friend?: string;
+    user?: IUser;
+    friend?: IFriend;
 }
 
 export interface IFriend {
@@ -16,7 +16,7 @@ export interface ISidebar {
 }
 
 export interface IChatWindow {
-    friend?: string;
+    friend?: IFriend;
 }
 
 export interface IChatMessage {
