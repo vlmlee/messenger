@@ -31,7 +31,7 @@ import { join } from 'path';
             }
         }),
         ServeStaticModule.forRoot({
-            rootPath: join(__dirname, '..', 'client')
+            rootPath: join(__dirname, '..', 'client', 'dist')
         })
     ],
     controllers: [AppController],
