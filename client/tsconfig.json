@@ -9,7 +9,8 @@
         "allowJs": true,
         "checkJs": false,
         "strict": true,
-        "target": "ES2017"
+        "target": "ES2017",
+        "allowSyntheticDefaultImports": true
     },
     "include": ["src/**/*"],
     "exclude": ["node_modules", "dist"]
