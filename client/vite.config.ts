@@ -1,6 +1,6 @@
 module.exports = {
-    root: 'src',
+    root: '.',
     build: {
-        outDir: '../dist'
+        outDir: '../client/dist'
     }
 };
