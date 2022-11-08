@@ -12,7 +12,7 @@ export default () => {
     return (
         <main>
             <Sidebar channels={channels} />
-            <ChatWindow friend={friend} />
+            <ChatWindow user={user} friend={friend} />
         </main>
     );
 };

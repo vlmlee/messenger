@@ -16,6 +16,7 @@ export interface ISidebar {
 }
 
 export interface IChatWindow {
+    user?: IUser;
     friend?: IFriend;
 }
 
