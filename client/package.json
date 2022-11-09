@@ -5,6 +5,7 @@
     "scripts": {
         "start": "vite",
         "build": "vite build",
+        "build--watch": "vite build --watch",
         "preview": "vite preview",
         "typecheck": "tsc --noEmit",
         "typewatch": "tsc --noEmit --watch"
