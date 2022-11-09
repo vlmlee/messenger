@@ -8,7 +8,7 @@ export class MessageService {
     constructor(private prisma: PrismaService) {}
 
     async getMessage(id: number): Promise<Message | null> {
-        return await this.prisma.message.findUnique({
+        return this.prisma.message.findUnique({
             where: {
                 id: id
             }
@@ -16,11 +16,11 @@ export class MessageService {
     }
 
     async getAllMessages(): Promise<Message[]> {
-        return await this.prisma.message.findMany({});
+        return this.prisma.message.findMany({});
     }
 
     async getAllMessagesByUserId(userId: number): Promise<Message[]> {
-        return await this.prisma.message.findMany({
+        return this.prisma.message.findMany({
             where: {
                 fromUser: userId
             }
@@ -28,13 +28,13 @@ export class MessageService {
     }
 
     async postMessage(input: NewMessage): Promise<Message> {
-        return await this.prisma.message.create({
+        return this.prisma.message.create({
             data: input
         });
     }
 
     async deleteMessage(id: number): Promise<Message> {
-        return await this.prisma.message.delete({
+        return this.prisma.message.delete({
             where: {
                 id: id
             }

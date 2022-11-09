@@ -9,21 +9,21 @@ export class MessageResolver {
 
     @Query(returns => Message)
     async getMessage(@Args('id', { type: () => Int }) id: number): Promise<Message> {
-        return this.messageService.getMessage(id);
+        return await this.messageService.getMessage(id);
     }
 
     @Query(returns => [Message])
     async getAllMessages(): Promise<Message[]> {
-        return this.messageService.getAllMessages();
+        return await this.messageService.getAllMessages();
     }
 
     @Mutation(returns => Message)
     async postMessage(@Args('input') input: NewMessage): Promise<Message> {
-        return this.messageService.postMessage(input);
+        return await this.messageService.postMessage(input);
     }
 
     @Mutation(returns => Message)
     async deleteMessage(@Args('id') id: number): Promise<Message> {
-        return this.messageService.deleteMessage(id);
+        return await this.messageService.deleteMessage(id);
     }
 }
