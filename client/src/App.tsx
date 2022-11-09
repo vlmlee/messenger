@@ -4,9 +4,9 @@ import Sidebar from './components/Sidebar';
 import ChatWindow from './components/ChatWindow';
 import { IChannel, IUser } from 'typings';
 import './stylesheets/global.scss';
-import { gql } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 
-const getAllUsers = gql`
+const GET_ALL_USERS = gql`
     query GetUsers {
         getAllUsers {
             id
@@ -14,22 +14,16 @@ const getAllUsers = gql`
             messages {
                 content
                 userId
-            },
-            friends {
-                
             }
         }
     }
 `;
 
-//     createdAt DateTime? @default(now())
-//     name String?
-//     messages Message[]
-//     friends Friend[] @relation("Friend")
-//     partyAChannels Channel[] @relation("PartyA")
-//     partyBChannels Channel[] @relation("PartyB")
-
 export default () => {
+    const { loading, error, data } = useQuery(GET_ALL_USERS);
+
+    console.log(data);
+
     const [currentUser, setCurrentUser] = useState<IUser>({
         id: 0,
         name: 'Alice'
@@ -100,11 +94,6 @@ export default () => {
             }
         }
     };
-
-    useEffect(() => {
-        // Get channels
-        //
-    }, []);
 
     return (
         <main className={'App'}>

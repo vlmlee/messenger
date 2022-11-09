@@ -20,6 +20,11 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Friend {
+  id: Int!
+  userId: Int!
+}
+
 type User {
   id: Int!
 
@@ -29,6 +34,7 @@ type User {
   DateTime: DateTime!
   name: String
   messages: [Message!]!
+  friends: [Friend!]!
 }
 
 input MessageInput {
@@ -39,6 +45,11 @@ input MessageInput {
   """
   DateTime: DateTime!
   content: String!
+  userId: Int!
+}
+
+input FriendInput {
+  id: Int!
   userId: Int!
 }
 
@@ -63,4 +74,5 @@ input NewMessageInput {
 input NewUserInput {
   name: String
   messages: [MessageInput!]!
+  friends: [FriendInput!]!
 }
