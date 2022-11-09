@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ChangeEvent, MouseEventHandler, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import ChatMessage from './ChatMessage';
 import { IChatMessage, IChatWindow } from 'typings';
 
