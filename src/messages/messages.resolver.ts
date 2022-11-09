@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { MessageService } from './messages.service';
 import { Message } from './models/messages.model';
 import { NewMessage } from './models/newMessage.model';

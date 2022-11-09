@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType, GraphQLISODateTime, InputType } from '@nestjs/graphql';
+import { Field, GraphQLISODateTime, InputType, Int, ObjectType } from '@nestjs/graphql';
 
 @InputType('MessageInput')
 @ObjectType()

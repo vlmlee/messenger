@@ -2,8 +2,32 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import Sidebar from './components/Sidebar';
 import ChatWindow from './components/ChatWindow';
-import { IChannel, IFriend, IUser } from 'typings';
+import { IChannel, IUser } from 'typings';
 import './stylesheets/global.scss';
+import { gql } from '@apollo/client';
+
+const getAllUsers = gql`
+    query GetUsers {
+        getAllUsers {
+            id
+            name
+            messages {
+                content
+                userId
+            },
+            friends {
+                
+            }
+        }
+    }
+`;
+
+//     createdAt DateTime? @default(now())
+//     name String?
+//     messages Message[]
+//     friends Friend[] @relation("Friend")
+//     partyAChannels Channel[] @relation("PartyA")
+//     partyBChannels Channel[] @relation("PartyB")
 
 export default () => {
     const [currentUser, setCurrentUser] = useState<IUser>({

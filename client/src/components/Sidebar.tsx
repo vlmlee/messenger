@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Channel from './Channel';
-import { ISidebar, IChannel } from 'typings';
+import { IChannel, ISidebar } from 'typings';
 
 const Sidebar = ({ channels, selectChannel }: ISidebar) => {
     return (
