@@ -28,7 +28,11 @@ const ChatWindow = ({ friend }: IChatWindow) => {
                 <ChatMessage />
             ))}
             <div className={'chat-window__input-container'}>
-                <input onChange={(e: ChangeEvent<HTMLInputElement>) => updateMessage(e)} value={messageToSend} />
+                <input
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => updateMessage(e)}
+                    value={messageToSend}
+                    placeholder={'Welcome to the internet!'}
+                />
                 <button onClick={(e: any) => sendMessage(e)}>Send</button>
             </div>
             <div className={'chat-window__background'} />

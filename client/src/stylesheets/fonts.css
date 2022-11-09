@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'Iosevka';
+    src: local('Iosevka Medium Nerd Font Complete Mono Windows Compatible'), local('IosevkaNerdFontCompleteM-Medium'),
+        url('IosevkaNerdFontCompleteM-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
