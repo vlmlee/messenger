@@ -1,12 +1,12 @@
 import * as React from 'react';
 import Channel from './Channel';
-import { ISidebar } from 'typings';
+import { ISidebar, IChannel } from 'typings';
 
-const Sidebar = ({ channels }: ISidebar) => {
+const Sidebar = ({ channels, selectChannel }: ISidebar) => {
     return (
         <div className={'sidebar'}>
-            {channels.map(() => (
-                <Channel />
+            {channels.map((c: IChannel) => (
+                <Channel id={c.id} user={c.user} friend={c.friend} selectChannel={selectChannel} />
             ))}
             <div className={'sidebar__background'} />
         </div>

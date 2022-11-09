@@ -1,6 +1,8 @@
 export interface IChannel {
+    id?: number;
     user?: IUser;
     friend?: IFriend;
+    messages?: IChatMessage[];
 }
 
 export interface IFriend {
@@ -15,11 +17,13 @@ export interface IUser {
 
 export interface ISidebar {
     channels: IChannel[];
+    selectChannel: (id?: number) => void;
 }
 
 export interface IChatWindow {
     user?: IUser;
     friend?: IFriend;
+    selectedChannel?: IChannel;
 }
 
 export interface IChatMessage {

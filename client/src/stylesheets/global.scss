@@ -5,6 +5,7 @@
     --kurotsurubami: #0b1013;
     --shironezumi: #bdc0ba;
     --matrix-green-dark: #003b00;
+    --matrix-green-dark-lighter: #004400;
     --matrix-green-light: #00ff41;
     --shironeri: #fcfaf2;
     --font: 'Iosevka', 'Inter', Inconsolata, san-serif;
@@ -44,6 +45,44 @@
     .sidebar {
         flex-grow: 1;
         margin: 30px 15px 30px 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+
+        .channel:first-of-type {
+            margin-top: 15px;
+        }
+
+        .channel {
+            padding: 15px;
+            position: relative;
+            z-index: 1;
+            background-color: var(--matrix-green-dark);
+            border: 2px solid var(--matrix-green-light);
+            width: calc(100% - 60px);
+            border-radius: 15px;
+            color: var(--matrix-green-light);
+            cursor: pointer;
+            transition: 0.2s background-color ease-in-out, 0.2s border ease-in-out;
+
+            &__user,
+            &__friend {
+                position: relative;
+            }
+
+            &__user {
+            }
+
+            &__friend {
+            }
+
+            &:hover {
+                border: 2px solid var(--shironeri);
+                background-color: var(--matrix-green-dark-lighter);
+                color: var(--shironeri);
+            }
+        }
     }
 
     .chat-window {
