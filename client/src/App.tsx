@@ -29,14 +29,14 @@ export default () => {
     });
 
     const user = data
-        ? data.getAllUsers.find((user: any) => user.name === 'Alice')
+        ? data.getAllUsers.find((user: any) => user.name === 'Alice') || data.getAllUsers[0]
         : {
               name: 'Alice',
               id: 14
           };
 
     const friend = data
-        ? data.getAllUsers.find((user: any) => user.name === 'Bob')
+        ? data.getAllUsers.find((user: any) => user.name === 'Bob') || data.getAllUsers[1]
         : {
               name: 'Bob',
               id: 15
