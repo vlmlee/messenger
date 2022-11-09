@@ -15,6 +15,14 @@ model User {
     createdAt DateTime? @default(now())
     name String?
     messages Message[]
+    friends Friend[] @relation("Friend")
+    partyAChannels Channel[] @relation("PartyA")
+    partyBChannels Channel[] @relation("PartyB")
+}
+
+model Friend {
+    user User? @relation("Friend", fields: [userId], references: [id])
+    userId Int @id
 }
 
 model Message {
@@ -23,4 +31,15 @@ model Message {
     createdAt DateTime? @default(now())
     user User? @relation(fields: [userId], references: [id])
     userId Int?
+}
+
+model Channel {
+    id Int @default(autoincrement()) @id
+    createdAt DateTime? @default(now())
+    partyA User? @relation("PartyA", fields: [partyAUserId], references: [id])
+    partyAUserId Int
+    partyB User? @relation("PartyB", fields: [partyBUserId], references: [id])
+    partyBUserId Int
+
+    @@index([id, createdAt(sort: Desc)])
 }
