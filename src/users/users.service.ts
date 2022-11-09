@@ -26,9 +26,6 @@ export class UserService {
                 messagesTo: {
                     create: user.messagesTo ?? []
                 },
-                messagesFrom: {
-                    create: user.messagesFrom ?? []
-                },
                 friends: {
                     create: user.friends ?? []
                 }

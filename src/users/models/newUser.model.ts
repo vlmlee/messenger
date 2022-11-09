@@ -14,9 +14,6 @@ export class NewUser {
     @Field(() => [Message], { nullable: true })
     messagesTo?: Message[];
 
-    @Field(() => [Message], { nullable: true })
-    messagesFrom?: Message[];
-
     @Field(() => [Friend], { nullable: true })
     friends?: Friend[];
 }

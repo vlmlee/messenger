@@ -14,27 +14,17 @@ model User {
   id           Int       @id @default(autoincrement())
   createdAt    DateTime? @default(now())
   name         String?
-  friends      Friend[]  @relation("Friend")
-  messagesTo   Message[] @relation("To User")
+  friends      Int[]
   messagesFrom Message[] @relation("From User")
   channels     Channel[] @relation("Channels")
 
   @@index([id, createdAt(sort: Desc)])
 }
 
-model Friend {
-  id     Int   @id @default(autoincrement())
-  friend User? @relation("Friend", fields: [userId], references: [id])
-  userId Int
-
-  @@index([id])
-}
-
 model Message {
   id        Int      @unique @default(autoincrement())
   content   String?
   createdAt DateTime @default(now())
-  to        User?    @relation("To User", fields: [toUser], references: [id])
   toUser    Int?
   from      User?    @relation("From User", fields: [fromUser], references: [id])
   fromUser  Int?
