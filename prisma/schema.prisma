@@ -11,44 +11,42 @@ datasource db {
 }
 
 model User {
-    id Int @default(autoincrement()) @id
-    createdAt DateTime? @default(now())
-    name String?
-    friends Friend[]
-    messagesTo Message[] @relation("To User")
-    messagesFrom Message[] @relation("From User")
-    partyAChannels Channel[] @relation("PartyA")
-    partyBChannels Channel[] @relation("PartyB")
+  id           Int       @id @default(autoincrement())
+  createdAt    DateTime? @default(now())
+  name         String?
+  friends      Friend[]  @relation("Friend")
+  messagesTo   Message[] @relation("To User")
+  messagesFrom Message[] @relation("From User")
+  channels     Channel[] @relation("Channels")
 
-    @@index([id, createdAt(sort: Desc)])
+  @@index([id, createdAt(sort: Desc)])
 }
 
 model Friend {
-    id Int @default(autoincrement()) @id
-    user User? @relation(fields: [userId], references: [id])
-    userId Int
+  id     Int   @id @default(autoincrement())
+  friend User? @relation("Friend", fields: [userId], references: [id])
+  userId Int
 
-    @@index([id])
+  @@index([id])
 }
 
 model Message {
-    id Int @default(autoincrement()) @unique
-    content String?
-    createdAt DateTime @default(now())
-    from User? @relation("From User", fields: [fromUser], references: [id])
-    fromUser Int?
-    to User? @relation("To User", fields: [toUser], references: [id])
-    toUser Int?
-    @@id([createdAt])
+  id        Int      @unique @default(autoincrement())
+  content   String?
+  createdAt DateTime @default(now())
+  to        User?    @relation("To User", fields: [toUser], references: [id])
+  toUser    Int?
+  from      User?    @relation("From User", fields: [fromUser], references: [id])
+  fromUser  Int?
+
+  @@id([createdAt])
 }
 
 model Channel {
-    id Int @default(autoincrement()) @id
-    createdAt DateTime? @default(now())
-    partyA User? @relation("PartyA", fields: [partyAUserId], references: [id])
-    partyAUserId Int
-    partyB User? @relation("PartyB", fields: [partyBUserId], references: [id])
-    partyBUserId Int
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime? @default(now())
+  user      User?     @relation("Channels", fields: [userId], references: [id])
+  userId    Int
 
-    @@index([id, createdAt(sort: Desc)])
+  @@index([id, createdAt(sort: Desc)])
 }
