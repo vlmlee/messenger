@@ -22,8 +22,6 @@ const GET_ALL_USERS = gql`
 export default () => {
     const { loading, error, data } = useQuery(GET_ALL_USERS);
 
-    console.log(data);
-
     const [currentUser, setCurrentUser] = useState<IUser>({
         id: 0,
         name: 'Alice'

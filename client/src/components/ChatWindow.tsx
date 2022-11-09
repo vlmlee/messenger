@@ -2,8 +2,20 @@ import * as React from 'react';
 import { ChangeEvent, useEffect, useState } from 'react';
 import ChatMessage from './ChatMessage';
 import { IChatMessage, IChatWindow } from 'typings';
+import { gql, useMutation } from '@apollo/client';
+
+const POST_MESSAGE = gql`
+    mutation PostMessage($input: NewMessageInput!) {
+        postMessage(input: $input) {
+            userId
+            content
+        }
+    }
+`;
 
 const ChatWindow = ({ selectedChannel }: IChatWindow) => {
+    const [postMessage, { data, loading, error }] = useMutation(POST_MESSAGE);
+
     const { user, friend, messages } = selectedChannel ?? {
         user: null,
         friend: null,
@@ -16,15 +28,23 @@ const ChatWindow = ({ selectedChannel }: IChatWindow) => {
         setMessageToSend(e.target.value);
     };
 
-    const sendMessage = (e: Event) => {
+    const sendMessage = async (e: Event) => {
         e.preventDefault();
 
         // send graphql mutation
+        const postedMessage = await postMessage({
+            variables: {
+                input: {
+                    content: messageToSend,
+                    userId: user?.id
+                }
+            }
+        });
     };
 
-    const handleOnEnter = (e: KeyboardEvent) => {
+    const handleOnEnter = async (e: KeyboardEvent) => {
         if (e.key === 'Enter') {
-            sendMessage(e);
+            await sendMessage(e);
         }
     };
 
