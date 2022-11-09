@@ -1,5 +1,6 @@
 import { Args, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { User } from './models/users.model';
+import { Message } from '../messages/models/messages.model';
 import { MessageService } from '../messages/messages.service';
 import { UserService } from './users.service';
 import { NewUser } from './models/newUser.model';
@@ -19,7 +20,7 @@ export class UserResolver {
     }
 
     @ResolveField()
-    async messagesFrom(@Parent() user: User) {
+    async messagesFrom(@Parent() user: User): Promise<Message[]> {
         const { id } = user;
         return await this.messageService.getAllMessagesByUserId(id);
     }
