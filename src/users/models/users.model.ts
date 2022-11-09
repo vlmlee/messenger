@@ -14,4 +14,7 @@ export class User {
 
     @Field(type => [Message])
     messages?: Message[];
+
+    @Field(type => [Friend])
+    friends?: Friend[];
 }

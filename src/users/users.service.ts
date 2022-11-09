@@ -7,6 +7,10 @@ import { Injectable } from '@nestjs/common';
 export class UserService {
     constructor(private prisma: PrismaService) {}
 
+    async getAllUsers(): Promise<User[]> {
+        return await this.prisma.user.findMany({});
+    }
+
     async getUser(id: number): Promise<User> {
         return await this.prisma.user.findUnique({
             where: {

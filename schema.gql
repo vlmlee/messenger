@@ -45,6 +45,7 @@ input MessageInput {
 type Query {
   getMessage(id: Int!): Message!
   getAllMessages: [Message!]!
+  getAllUsers: [User!]!
   user(id: Int!): User!
 }
 
