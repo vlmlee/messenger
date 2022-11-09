@@ -80,7 +80,7 @@ const ChatWindow = ({ loading, selectedChannel }: IChatWindow) => {
                         lastElement={i === arr.length - 1}
                         key={`${m.timestamp}${i}`}
                         isUser={m.fromUser === user?.id}
-                        name={m.name}
+                        name={user?.id === m.fromUser ? user?.name : friend?.name}
                         content={m.content}
                         timestamp={m.timestamp}
                     />
