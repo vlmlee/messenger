@@ -1,6 +1,5 @@
 import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
 import { Message } from '../../messages/models/messages.model';
-import { Friend } from './friend.model';
 
 @InputType('NewUserInput')
 @ObjectType('NewUser')
@@ -14,6 +13,6 @@ export class NewUser {
     @Field(() => [Message], { nullable: true })
     messagesTo?: Message[];
 
-    @Field(() => [Friend], { nullable: true })
-    friends?: Friend[];
+    @Field(() => [Int], { nullable: true })
+    friends?: number[];
 }

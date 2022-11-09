@@ -1,6 +1,5 @@
 import { Field, GraphQLISODateTime, Int, ObjectType } from '@nestjs/graphql';
 import { Message } from '../../messages/models/messages.model';
-import { Friend } from './friend.model';
 
 @ObjectType()
 export class User {
@@ -16,6 +15,6 @@ export class User {
     @Field(type => [Message], { nullable: true })
     messagesFrom?: Message[];
 
-    @Field(type => [Friend], { nullable: true })
-    friends?: Friend[];
+    @Field(type => [Int], { nullable: true })
+    friends?: number[];
 }
