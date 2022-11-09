@@ -13,5 +13,8 @@ export class Message {
     content: string;
 
     @Field(type => Int)
-    userId: number;
+    fromUser?: number;
+
+    @Field(type => Int)
+    toUser?: number;
 }

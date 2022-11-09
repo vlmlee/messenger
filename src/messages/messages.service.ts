@@ -22,7 +22,7 @@ export class MessageService {
     async getAllMessagesByUserId(userId: number): Promise<Message[]> {
         return await this.prisma.message.findMany({
             where: {
-                userId: userId
+                fromUser: userId
             }
         });
     }
