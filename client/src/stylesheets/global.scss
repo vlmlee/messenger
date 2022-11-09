@@ -4,7 +4,8 @@
     --sumi: #1c1c1c;
     --kurotsurubami: #0b1013;
     --shironezumi: #bdc0ba;
-    --matrix-green: #003b00;
+    --matrix-green-dark: #003b00;
+    --matrix-green-light: #00ff41;
     --shironeri: #fcfaf2;
     --font: 'Iosevka', 'Inter', Inconsolata, san-serif;
 }
@@ -26,7 +27,7 @@
     .sidebar,
     .chat-window {
         border-radius: 15px;
-        border: 2px solid var(--shironezumi);
+        border: 2px solid var(--matrix-green-light);
         position: relative;
 
         &__background {
@@ -50,6 +51,15 @@
         margin: 30px 30px 30px 15px;
         position: relative;
 
+        &__connected-message {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            text-align: center;
+        }
+
         &__input-container {
             position: absolute;
             bottom: 0;
@@ -63,9 +73,14 @@
                 box-sizing: border-box;
                 padding: 20px;
                 border-radius: 0 0 0 12px;
-                border: 2px solid var(--shironezumi);
-                background-color: var(--shironeri);
-                color: var(--matrix-green);
+                border-top: 2px solid var(--matrix-green-light);
+                border-right: 3px solid var(--matrix-green-light);
+                background-color: var(--kurotsurubami);
+                color: var(--shironeri);
+
+                &::placeholder {
+                    opacity: 0.9;
+                }
             }
 
             button {
@@ -75,8 +90,58 @@
                 height: 100%;
                 color: var(--shironeri);
                 border-radius: 0 0 12px 0;
-                border-top: 2px solid var(--shironezumi);
-                background: var(--matrix-green);
+                border-top: 2px solid var(--matrix-green-light);
+                background: var(--matrix-green-dark);
+            }
+        }
+
+        .chat-window__messages-container {
+            position: absolute;
+            height: calc(100% - 120px);
+            width: 100%;
+            z-index: 1;
+            top: 70px;
+            display: flex;
+            flex-direction: column;
+            color: var(--matrix-green-light);
+
+            .chat-message__container {
+                width: 100%;
+                display: flex;
+
+                &--user,
+                &--friend {
+                    position: relative;
+                }
+
+                &--user {
+                    text-align: right;
+                    right: 30px;
+                    justify-content: flex-end;
+                }
+
+                &--friend {
+                    text-align: left;
+                    left: 30px;
+                    justify-content: flex-start;
+                }
+
+                .chat-message {
+                    border: 2px solid var(--matrix-green-light);
+                    padding: 15px;
+                    border-radius: 15px;
+                    position: relative;
+                    text-align: left;
+
+                    &__name {
+                    }
+
+                    &__content {
+                    }
+
+                    &__timestamp {
+                    }
+                }
             }
         }
     }

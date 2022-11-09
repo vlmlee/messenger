@@ -6,8 +6,14 @@ import { IChannel, IFriend, IUser } from 'typings';
 import './stylesheets/global.scss';
 
 export default () => {
-    const [user, setUser] = useState<IUser>({});
-    const [friend, setFriend] = useState<IFriend>({});
+    const [user, setUser] = useState<IUser>({
+        id: 0,
+        name: 'user'
+    });
+    const [friend, setFriend] = useState<IFriend>({
+        id: 1,
+        name: 'friend'
+    });
     const [channels, setChannels] = useState<IChannel[]>([]);
 
     return (

@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { ChangeEvent, MouseEventHandler, useEffect, useState } from 'react';
 import ChatMessage from './ChatMessage';
-import { IChatWindow } from 'typings';
+import { IChatMessage, IChatWindow } from 'typings';
 
-const ChatWindow = ({ friend }: IChatWindow) => {
-    const [messages, setMessages] = useState([]); // order messages by date to display them correctly
+const ChatWindow = ({ user, friend }: IChatWindow) => {
+    const [messages, setMessages] = useState<IChatMessage[]>([
+        { id: 0, name: 'user', content: 'test', timestamp: new Date().toISOString() },
+        { id: 1, name: 'friend', content: 'hello', timestamp: new Date().toISOString() },
+        { id: 0, name: 'user', content: 'hi', timestamp: new Date().toISOString() }
+    ]); // order messages by date to display them correctly
     const [messageToSend, setMessageToSend] = useState('');
-
-    useEffect(() => {
-        // fetch messages
-    }, []);
 
     const updateMessage = (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -22,11 +22,34 @@ const ChatWindow = ({ friend }: IChatWindow) => {
         // send graphql mutation
     };
 
+    const handleOnEnter = (e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            sendMessage(e);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('keypress', handleOnEnter);
+
+        return () => {
+            document.removeEventListener('keypress', handleOnEnter);
+        };
+    }, []);
+
     return (
         <div className={'chat-window'}>
-            {messages.map(() => (
-                <ChatMessage />
-            ))}
+            <div className={'chat-window__connected-message'}>Connected.</div>
+            <div className={'chat-window__messages-container'}>
+                {messages.map((m: IChatMessage, i: number) => (
+                    <ChatMessage
+                        key={`${m.timestamp}${i}`}
+                        isUser={m.id === user?.id}
+                        name={m.name}
+                        content={m.content}
+                        timestamp={m.timestamp}
+                    />
+                ))}
+            </div>
             <div className={'chat-window__input-container'}>
                 <input
                     onChange={(e: ChangeEvent<HTMLInputElement>) => updateMessage(e)}

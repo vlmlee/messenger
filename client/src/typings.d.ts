@@ -4,10 +4,12 @@ export interface IChannel {
 }
 
 export interface IFriend {
+    id?: number;
     name?: string;
 }
 
 export interface IUser {
+    id?: number;
     name?: string;
 }
 
@@ -21,6 +23,9 @@ export interface IChatWindow {
 }
 
 export interface IChatMessage {
+    id?: number;
     name?: string;
     content?: string;
+    timestamp?: string;
+    isUser?: boolean;
 }
