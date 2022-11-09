@@ -8,12 +8,12 @@ export class NewUser {
     @Field({ nullable: true })
     name: string;
 
-    @Field(() => [Message])
+    @Field(() => [Message], { nullable: true })
     messagesTo?: Message[];
 
-    @Field(() => [Message])
+    @Field(() => [Message], { nullable: true })
     messagesFrom?: Message[];
 
-    @Field(() => [Friend])
+    @Field(() => [Friend], { nullable: true })
     friends?: Friend[];
 }

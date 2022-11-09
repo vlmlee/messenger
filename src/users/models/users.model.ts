@@ -13,12 +13,12 @@ export class User {
     @Field({ nullable: true })
     name: string;
 
-    @Field(type => [Message])
+    @Field(type => [Message], { nullable: true })
     messagesTo?: Message[];
 
-    @Field(type => [Message])
+    @Field(type => [Message], { nullable: true })
     messagesFrom?: Message[];
 
-    @Field(type => [Friend])
+    @Field(type => [Friend], { nullable: true })
     friends?: Friend[];
 }

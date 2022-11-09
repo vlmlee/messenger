@@ -34,9 +34,9 @@ type User {
   """
   DateTime: DateTime!
   name: String
-  messagesTo: [Message!]!
-  messagesFrom: [Message!]!
-  friends: [Friend!]!
+  messagesTo: [Message!]
+  messagesFrom: [Message!]
+  friends: [Friend!]
 }
 
 input MessageInput {
@@ -77,7 +77,7 @@ input NewMessageInput {
 
 input NewUserInput {
   name: String
-  messagesTo: [MessageInput!]!
-  messagesFrom: [MessageInput!]!
-  friends: [FriendInput!]!
+  messagesTo: [MessageInput!]
+  messagesFrom: [MessageInput!]
+  friends: [FriendInput!]
 }
