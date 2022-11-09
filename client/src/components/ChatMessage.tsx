@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { IChatMessage } from 'typings';
 
-const ChatMessage = ({ name, content, timestamp, isUser }: IChatMessage) => (
+const ChatMessage = ({ lastElement, name, content, timestamp, isUser }: IChatMessage) => (
     <div
+        id={lastElement ? 'last-message' : ''}
         className={
             'chat-message__container' + (isUser ? ' chat-message__container--user' : ' chat-message__container--friend')
         }>

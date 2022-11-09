@@ -24,6 +24,7 @@ export interface IChatWindow {
     user?: IUser;
     friend?: IFriend;
     selectedChannel?: IChannel;
+    loading?: boolean;
 }
 
 export interface IChatMessage {
@@ -31,5 +32,8 @@ export interface IChatMessage {
     name?: string;
     content?: string;
     timestamp?: string;
+    fromUser?: number;
+    toUser?: number;
     isUser?: boolean;
+    lastElement?: boolean;
 }

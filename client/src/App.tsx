@@ -11,92 +11,78 @@ const GET_ALL_USERS = gql`
         getAllUsers {
             id
             name
-            messages {
+            messagesFrom {
+                id
                 content
-                userId
+                fromUser
+                toUser
+                DateTime
             }
+            friends
         }
     }
 `;
 
 export default () => {
-    const { loading, error, data } = useQuery(GET_ALL_USERS);
-
-    const [currentUser, setCurrentUser] = useState<IUser>({
-        id: 0,
-        name: 'Alice'
+    const { loading, error, data } = useQuery(GET_ALL_USERS, {
+        pollInterval: 500
     });
 
-    const [channels, setChannels] = useState<IChannel[]>([
-        {
-            id: 0,
-            user: currentUser,
-            friend: {
-                id: 1,
-                name: 'Bob'
-            },
-            messages: [
-                { id: 0, name: 'Alice', content: 'test', timestamp: new Date().toISOString() },
-                { id: 1, name: 'Bob', content: 'hello', timestamp: new Date().toISOString() },
-                { id: 0, name: 'Alice', content: 'hi', timestamp: new Date().toISOString() },
-                {
-                    id: 0,
-                    name: 'Alice',
-                    content:
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                    timestamp: new Date().toISOString()
-                },
-                {
-                    id: 1,
-                    name: 'Bob',
-                    content:
-                        'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ',
-                    timestamp: new Date().toISOString()
-                }
-            ]
-        },
-        {
-            id: 1,
-            user: currentUser,
-            friend: {
-                id: 2,
-                name: 'Charlie'
-            },
-            messages: [
-                { id: 2, name: 'Charlie', content: 'hey', timestamp: new Date().toISOString() },
-                { id: 0, name: 'Alice', content: 'hello', timestamp: new Date().toISOString() },
-                {
-                    id: 0,
-                    name: 'Alice',
-                    content: "What's up?",
-                    timestamp: new Date().toISOString()
-                },
-                {
-                    id: 2,
-                    name: 'Charlie',
-                    content: 'Nothing much',
-                    timestamp: new Date().toISOString()
-                }
-            ]
-        }
-    ]);
+    const user = data
+        ? data.getAllUsers.find((user: any) => user.name === 'Alice')
+        : {
+              name: 'Alice',
+              id: 14
+          };
 
-    const [selectedChannel, setSelectedChannel] = useState<IChannel>(channels[0]);
+    const friend = data
+        ? data.getAllUsers.find((user: any) => user.name === 'Bob')
+        : {
+              name: 'Bob',
+              id: 15
+          };
+
+    const [selectedChannel, setSelectedChannel] = useState<IChannel>({});
 
     const selectChannel = (id?: number) => {
         if (id !== undefined || id !== null) {
-            const _selectedChannel = channels.find((c: IChannel) => c.id === id);
-
-            if (_selectedChannel) {
-                setSelectedChannel(_ => _selectedChannel);
-            }
         }
     };
 
+    useEffect(() => {
+        if (data) {
+            setSelectedChannel((_: any) => {
+                return {
+                    id: 0,
+                    user: {
+                        id: user.id,
+                        name: user.name
+                    },
+                    friend: {
+                        id: friend.id,
+                        name: friend.name
+                    },
+                    messages: [...user.messagesFrom, ...friend.messagesFrom]
+                        .sort((a: any, b: any) => {
+                            const timestamp1 = new Date(b.DateTime);
+                            const timestamp2 = new Date(a.DateTime);
+                            return timestamp2.getTime() - timestamp1.getTime();
+                        })
+                        .map((m: any) => {
+                            return {
+                                ...m,
+                                timestamp: m.DateTime
+                            };
+                        })
+                };
+            });
+        }
+    }, [data]);
+
     return (
         <main className={'App'}>
-            <Sidebar channels={channels} selectChannel={selectChannel} />
-            <ChatWindow selectedChannel={selectedChannel} />
+            <Sidebar channels={[selectedChannel]} selectChannel={selectChannel} />
+            <ChatWindow loading={loading} selectedChannel={selectedChannel} />
         </main>
     );
 };

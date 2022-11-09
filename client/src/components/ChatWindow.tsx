@@ -2,46 +2,61 @@ import * as React from 'react';
 import { ChangeEvent, useEffect, useState } from 'react';
 import ChatMessage from './ChatMessage';
 import { IChatMessage, IChatWindow } from 'typings';
-import { gql, useMutation } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 
 const POST_MESSAGE = gql`
     mutation PostMessage($input: NewMessageInput!) {
         postMessage(input: $input) {
-            userId
+            fromUser
+            toUser
             content
         }
     }
 `;
 
-const ChatWindow = ({ selectedChannel }: IChatWindow) => {
-    const [postMessage, { data, loading, error }] = useMutation(POST_MESSAGE);
+const ChatWindow = ({ loading, selectedChannel }: IChatWindow) => {
+    const [postMessage, { data, error }] = useMutation(POST_MESSAGE);
+    const [messageToSend, setMessageToSend] = useState('');
 
     const { user, friend, messages } = selectedChannel ?? {
+        id: 0,
         user: null,
         friend: null,
         messages: []
     };
-    const [messageToSend, setMessageToSend] = useState('');
 
-    const updateMessage = (e: ChangeEvent<HTMLInputElement>) => {
+    const updateMessage = async (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
-        setMessageToSend(e.target.value);
+        setMessageToSend(_ => e.target.value);
     };
 
     const sendMessage = async (e: Event) => {
-        e.preventDefault();
-
-        // send graphql mutation
-        const postedMessage = await postMessage({
+        await postMessage({
             variables: {
                 input: {
                     content: messageToSend,
-                    userId: user?.id
+                    fromUser: user?.id,
+                    toUser: friend?.id
                 }
             }
         });
-    };
 
+        setTimeout(() => {
+            const element = document.getElementById('last-message');
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+            }
+        }, 1000);
+
+        // hack
+        setTimeout(() => {
+            const element = document.getElementById('last-message');
+            // @ts-ignore
+            element.parentNode!.scrollTop = 10000;
+        }, 1500);
+
+        setMessageToSend('');
+    };
     const handleOnEnter = async (e: KeyboardEvent) => {
         if (e.key === 'Enter') {
             await sendMessage(e);
@@ -54,16 +69,17 @@ const ChatWindow = ({ selectedChannel }: IChatWindow) => {
         return () => {
             document.removeEventListener('keypress', handleOnEnter);
         };
-    }, []);
+    }, [messageToSend]);
 
     return (
         <div className={'chat-window'}>
-            <div className={'chat-window__connected-message'}>Connected.</div>
-            <div className={'chat-window__messages-container'}>
-                {messages?.map((m: IChatMessage, i: number) => (
+            <div className={'chat-window__connected-message'}>{loading ? 'Loading...' : 'Connected.'}</div>
+            <div className={'chat-window__messages-container'} id={'chat-window__messages-container'}>
+                {messages?.map((m: IChatMessage, i: number, arr: any) => (
                     <ChatMessage
+                        lastElement={i === arr.length - 1}
                         key={`${m.timestamp}${i}`}
-                        isUser={m.id === user?.id}
+                        isUser={m.fromUser === user?.id}
                         name={m.name}
                         content={m.content}
                         timestamp={m.timestamp}

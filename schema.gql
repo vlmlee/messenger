@@ -21,11 +21,6 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type Friend {
-  id: Int!
-  userId: Int!
-}
-
 type User {
   id: Int!
 
@@ -34,9 +29,8 @@ type User {
   """
   DateTime: DateTime!
   name: String
-  messagesTo: [Message!]
   messagesFrom: [Message!]
-  friends: [Friend!]
+  friends: [Int!]
 }
 
 input MessageInput {
@@ -49,11 +43,6 @@ input MessageInput {
   content: String!
   fromUser: Int!
   toUser: Int!
-}
-
-input FriendInput {
-  id: Int!
-  userId: Int!
 }
 
 type Query {
@@ -78,7 +67,6 @@ input NewMessageInput {
 input NewUserInput {
   id: Int
   name: String
-  messagesTo: [MessageInput!]
   messagesFrom: [MessageInput!]
-  friends: [FriendInput!]
+  friends: [Int!]
 }
