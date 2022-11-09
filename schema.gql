@@ -1,0 +1,84 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+type Message {
+  id: Int!
+
+  """
+  A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+  """
+  DateTime: DateTime!
+  content: String!
+  fromUser: Int!
+  toUser: Int!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Friend {
+  id: Int!
+  userId: Int!
+}
+
+type User {
+  id: Int!
+
+  """
+  A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+  """
+  DateTime: DateTime!
+  name: String
+  messagesTo: [Message!]
+  messagesFrom: [Message!]
+  friends: [Friend!]
+}
+
+input MessageInput {
+  id: Int!
+
+  """
+  A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+  """
+  DateTime: DateTime!
+  content: String!
+  fromUser: Int!
+  toUser: Int!
+}
+
+input FriendInput {
+  id: Int!
+  userId: Int!
+}
+
+type Query {
+  getMessage(id: Int!): Message!
+  getAllMessages: [Message!]!
+  getAllUsers: [User!]!
+  user(id: Int!): User!
+}
+
+type Mutation {
+  postMessage(input: NewMessageInput!): Message!
+  deleteMessage(id: Float!): Message!
+  createUser(user: NewUserInput!): User!
+}
+
+input NewMessageInput {
+  content: String!
+  fromUser: Int!
+  toUser: Int!
+}
+
+input NewUserInput {
+  id: Int
+  name: String
+  messagesTo: [MessageInput!]
+  messagesFrom: [MessageInput!]
+  friends: [FriendInput!]
+}
