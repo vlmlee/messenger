@@ -11,10 +11,11 @@ const ChatWindow = ({ friend }: IChatWindow) => {
     }, []);
 
     return (
-        <div>
+        <div className={'chat-window'}>
             {messages.map(() => (
                 <ChatMessage />
             ))}
+            <div className={'chat-window__background'} />
         </div>
     );
 };

@@ -1,0 +1,46 @@
+:root {
+    --sumi: #1c1c1c;
+    --kurotsurubami: #0b1013;
+    --shironezumi: #bdc0ba;
+    --font: 'Iosevka';
+}
+
+.App {
+    background-color: var(--sumi);
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+
+    .sidebar,
+    .chat-window {
+        border-radius: 15px;
+        border: 2px solid var(--shironezumi);
+        position: relative;
+
+        &__background {
+            background-color: var(--kurotsurubami);
+            opacity: 0.5;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            border-radius: 15px;
+        }
+    }
+
+    .sidebar {
+        flex-grow: 1;
+        margin: 30px 15px 30px 30px;
+    }
+
+    .chat-window {
+        flex-grow: 4;
+        margin: 30px 30px 30px 15px;
+        position: relative;
+    }
+}

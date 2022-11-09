@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import ChatWindow from './components/ChatWindow';
 import { IChannel, IFriend, IUser } from 'typings';
+import './stylesheets/global.scss';
 
 export default () => {
     const [user, setUser] = useState<IUser>({});
@@ -10,7 +11,7 @@ export default () => {
     const [channels, setChannels] = useState<IChannel[]>([]);
 
     return (
-        <main>
+        <main className={'App'}>
             <Sidebar channels={channels} />
             <ChatWindow user={user} friend={friend} />
         </main>
