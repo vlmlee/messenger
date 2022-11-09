@@ -18,20 +18,24 @@ model User {
     friends Friend[]
     partyAChannels Channel[] @relation("PartyA")
     partyBChannels Channel[] @relation("PartyB")
+
+    @@index([id, createdAt(sort: Desc)])
 }
 
 model Friend {
     id Int @default(autoincrement()) @id
     user User? @relation(fields: [userId], references: [id])
     userId Int
+
+    @@index([id])
 }
 
 model Message {
-    id Int @default(autoincrement()) @id
     content String?
-    createdAt DateTime? @default(now())
+    createdAt DateTime @default(now())
     user User? @relation(fields: [userId], references: [id])
     userId Int?
+    @@id([createdAt])
 }
 
 model Channel {
