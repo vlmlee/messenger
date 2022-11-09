@@ -142,7 +142,7 @@
             }
         }
 
-        .chat-window__messages-container {
+        &__messages-container {
             position: absolute;
             height: calc(100% - 120px);
             width: 100%;
