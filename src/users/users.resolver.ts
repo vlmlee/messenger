@@ -19,7 +19,7 @@ export class UserResolver {
     }
 
     @ResolveField()
-    async messages(@Parent() user: User) {
+    async messagesFrom(@Parent() user: User) {
         const { id } = user;
         return this.messageService.getAllMessagesByUserId(id);
     }

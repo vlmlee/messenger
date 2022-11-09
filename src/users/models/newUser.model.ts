@@ -9,7 +9,10 @@ export class NewUser {
     name: string;
 
     @Field(() => [Message])
-    messages?: Message[];
+    messagesTo?: Message[];
+
+    @Field(() => [Message])
+    messagesFrom?: Message[];
 
     @Field(() => [Friend])
     friends?: Friend[];

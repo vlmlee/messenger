@@ -12,7 +12,8 @@ type Message {
   """
   DateTime: DateTime!
   content: String!
-  userId: Int!
+  fromUser: Int!
+  toUser: Int!
 }
 
 """
@@ -33,7 +34,8 @@ type User {
   """
   DateTime: DateTime!
   name: String
-  messages: [Message!]!
+  messagesTo: [Message!]!
+  messagesFrom: [Message!]!
   friends: [Friend!]!
 }
 
@@ -45,7 +47,8 @@ input MessageInput {
   """
   DateTime: DateTime!
   content: String!
-  userId: Int!
+  fromUser: Int!
+  toUser: Int!
 }
 
 input FriendInput {
@@ -68,11 +71,13 @@ type Mutation {
 
 input NewMessageInput {
   content: String!
-  userId: Int!
+  fromUser: Int!
+  toUser: Int!
 }
 
 input NewUserInput {
   name: String
-  messages: [MessageInput!]!
+  messagesTo: [MessageInput!]!
+  messagesFrom: [MessageInput!]!
   friends: [FriendInput!]!
 }

@@ -14,8 +14,9 @@ model User {
     id Int @default(autoincrement()) @id
     createdAt DateTime? @default(now())
     name String?
-    messages Message[]
     friends Friend[]
+    messagesTo Message[] @relation("To User")
+    messagesFrom Message[] @relation("From User")
     partyAChannels Channel[] @relation("PartyA")
     partyBChannels Channel[] @relation("PartyB")
 
@@ -31,10 +32,13 @@ model Friend {
 }
 
 model Message {
+    id Int @default(autoincrement()) @unique
     content String?
     createdAt DateTime @default(now())
-    user User? @relation(fields: [userId], references: [id])
-    userId Int?
+    from User? @relation("From User", fields: [fromUser], references: [id])
+    fromUser Int?
+    to User? @relation("To User", fields: [toUser], references: [id])
+    toUser Int?
     @@id([createdAt])
 }
 
