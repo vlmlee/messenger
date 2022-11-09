@@ -10,9 +10,9 @@ export class NewUser {
     @Field({ nullable: true })
     name: string;
 
-    @Field(() => [Message], { nullable: true })
-    messagesTo?: Message[];
+    @Field(type => [Message], { nullable: true })
+    messagesFrom?: Message[];
 
-    @Field(() => [Int], { nullable: true })
+    @Field(type => [Int], { nullable: true })
     friends?: number[];
 }
