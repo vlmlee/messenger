@@ -33,10 +33,11 @@ model Message {
 }
 
 model Channel {
-  id        Int       @id @default(autoincrement())
-  createdAt DateTime? @default(now())
-  user      User?     @relation("Channels", fields: [userId], references: [id])
-  userId    Int
+  id           Int       @id @default(autoincrement())
+  createdAt    DateTime? @default(now())
+  channelOwner User?     @relation("Channels", fields: [userId], references: [id])
+  userId       Int
+  participants Int[]
 
   @@index([id, createdAt(sort: Desc)])
 }

@@ -2,10 +2,11 @@ import { PrismaService } from '../prisma.service';
 import { User } from './models/users.model';
 import { NewUser } from './models/newUser.model';
 import { Injectable } from '@nestjs/common';
+import { ChannelService } from '../channels/channels.service';
 
 @Injectable()
 export class UserService {
-    constructor(private prisma: PrismaService) {}
+    constructor(private prisma: PrismaService, private channelService: ChannelService) {}
 
     async getAllUsers(): Promise<User[]> {
         return this.prisma.user.findMany({});
@@ -29,5 +30,9 @@ export class UserService {
                 friends: []
             }
         });
+    }
+
+    async addChannelToUser(): Promise<User> {
+        return this.channelService.createChannel();
     }
 }
