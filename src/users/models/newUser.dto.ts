@@ -1,6 +1,5 @@
-import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
+import { Field, InputType, Int } from '@nestjs/graphql';
 import { Message } from '../../messages/models/messages.entity';
-import { Column, Entity, OneToMany } from 'typeorm';
 
 @InputType('NewUserInput')
 export class NewUser {
@@ -13,6 +12,6 @@ export class NewUser {
     @Field(type => [Message], { nullable: true })
     messagesFrom?: Message[];
 
-    @Column()
+    @Field(type => [Int], { nullable: true })
     friends?: number[];
 }
