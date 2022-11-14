@@ -1,5 +1,5 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
-import { Message } from '../../messages/models/messages.entity';
+import { Message } from '../../messages/entity/messages.entity';
 
 @InputType('NewUserInput')
 export class NewUser {

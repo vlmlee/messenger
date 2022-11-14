@@ -4,8 +4,8 @@ import { UserService } from './users.service';
 import { PrismaService } from '../prisma.service';
 import { MessageService } from '../messages/messages.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './models/users.entity';
-import { NewUser } from './models/newUser.dto';
+import { User } from './entity/users.entity';
+import { NewUser } from './entity/newUser.dto';
 
 @Module({
     imports: [TypeOrmModule.forFeature([User, NewUser])],
