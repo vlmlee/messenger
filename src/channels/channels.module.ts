@@ -3,7 +3,7 @@ import { ChannelResolver } from './channels.resolver';
 import { ChannelService } from './channels.service';
 import { PrismaService } from '../prisma.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Channel } from './models/channels.model';
+import { Channel } from './models/channels.entity';
 
 @Module({
     imports: [TypeOrmModule.forFeature([Channel])],

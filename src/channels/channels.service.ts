@@ -1,6 +1,6 @@
 import { PrismaService } from '../prisma.service';
 import { Injectable } from '@nestjs/common';
-import { Channel } from './models/channels.model';
+import { Channel } from './models/channels.entity';
 
 @Injectable()
 export class ChannelService {

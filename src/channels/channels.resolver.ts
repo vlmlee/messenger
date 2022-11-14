@@ -1,5 +1,5 @@
 import { Args, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
-import { Channel } from './models/channels.model';
+import { Channel } from './models/channels.entity';
 import { ChannelService } from './channels.service';
 
 @Resolver(of => Channel)
