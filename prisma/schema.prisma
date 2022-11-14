@@ -14,11 +14,14 @@ model User {
   id              Int       @id @default(autoincrement())
   createdAt       DateTime? @default(now())
   name            String?
-  friends         Int[]
   messagesFrom    Message[] @relation("From User")
   channelsOwn     Channel[] @relation("Channels")
   participatingIn Channel[]
 
+  friends          User[]    @relation("Friends")
+  friend           User?     @relation("Friends", fields: [id, createdAt, name], references: [id, createdAt, name])
+
+  @@unique([id, createdAt, name])
   @@index([id, createdAt(sort: Desc)])
 }
 
