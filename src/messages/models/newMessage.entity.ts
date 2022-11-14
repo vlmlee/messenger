@@ -2,7 +2,6 @@ import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
 import { Column, Entity } from 'typeorm';
 
 @InputType('NewMessageInput')
-@ObjectType('NewMessage')
 @Entity()
 export class NewMessage {
     @Field()
