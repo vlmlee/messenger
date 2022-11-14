@@ -1,6 +1,6 @@
 import { PrismaService } from '../prisma.service';
 import { User } from './models/users.entity';
-import { NewUser } from './models/newUser.model';
+import { NewUser } from './models/newUser.entity';
 import { Injectable } from '@nestjs/common';
 import { ChannelService } from '../channels/channels.service';
 
