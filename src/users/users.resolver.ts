@@ -3,7 +3,7 @@ import { User } from './models/users.entity';
 import { Message } from '../messages/models/messages.entity';
 import { MessageService } from '../messages/messages.service';
 import { UserService } from './users.service';
-import { NewUser } from './models/newUser.entity';
+import { NewUser } from './models/newUser.dto';
 
 @Resolver(of => User)
 export class UserResolver {
