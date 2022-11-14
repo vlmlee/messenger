@@ -26,7 +26,7 @@ dotenv.config();
                     logging: true,
                     url: process.env.DATABASE_URL,
                     entities: [__dirname + '/**/**.models{.ts,.js}'],
-                    synchronize: true
+                    synchronize: true // should not use in production as you can lose data
                 };
             }
         }),
