@@ -1,7 +1,7 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { MessageService } from './messages.service';
-import { Message } from './models/messages.model';
-import { NewMessage } from './models/newMessage.model';
+import { Message } from './models/messages.entity';
+import { NewMessage } from './models/newMessage.entity';
 
 @Resolver(of => Message)
 export class MessageResolver {

@@ -1,5 +1,5 @@
 import { Field, GraphQLISODateTime, Int, ObjectType } from '@nestjs/graphql';
-import { Message } from '../../messages/models/messages.model';
+import { Message } from '../../messages/models/messages.entity';
 
 @ObjectType()
 export class User {

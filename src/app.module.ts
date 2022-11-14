@@ -25,7 +25,7 @@ dotenv.config();
                     type: 'postgres',
                     logging: true,
                     url: process.env.DATABASE_URL,
-                    entities: [__dirname + '/**/**.models{.ts,.js}'],
+                    entities: [__dirname + '/**/**.entity{.ts,.js}'],
                     synchronize: true // should not use in production as you can lose data
                 };
             }
