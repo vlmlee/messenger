@@ -11,8 +11,8 @@ import { upperDirectiveTransformer } from './common/directives/upper-case.direct
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('dotenv').config();
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Module({
     imports: [
