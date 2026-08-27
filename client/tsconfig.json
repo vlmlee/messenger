@@ -1,8 +1,7 @@
 {
     "compilerOptions": {
-        "baseUrl": "./src",
         "jsx": "react",
-        "moduleResolution": "Node",
+        "moduleResolution": "NodeNext",
         "paths": {
             "~*": ["./*"]
         },
@@ -10,7 +9,9 @@
         "checkJs": false,
         "strict": true,
         "target": "ES2017",
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "ignoreDeprecations": "6.0"
+   
     },
     "include": ["src/**/*"],
     "exclude": ["node_modules", "dist"]

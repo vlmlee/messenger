@@ -6,6 +6,10 @@ import { Channel } from './entity/channels.entity';
 export class ChannelService {
     constructor(private prisma: PrismaService) {}
 
+    async getAllChannels(): Promise<Channel[]> {
+        return this.prisma.channel.findMany();
+    }
+
     async createChannel(createdBy: number): Promise<Channel> {
         if (!createdBy) {
             throw new Error('User is required');
