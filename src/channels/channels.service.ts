@@ -17,7 +17,6 @@ export class ChannelService {
 
         return this.prisma.channel.create({
             data: {
-                id: Math.floor(Math.random() * 1000000),
                 createdBy: createdBy,
                 participants: [createdBy]
             }
