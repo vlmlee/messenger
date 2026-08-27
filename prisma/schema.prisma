@@ -11,37 +11,23 @@ datasource db {
 }
 
 model User {
-  id              Int       @id @default(autoincrement())
-  createdAt       DateTime? @default(now())
-  name            String?
-  messagesFrom    Message[] @relation("From User")
-  channelsOwn     Channel[] @relation("Channels")
-  participatingIn Channel[]
-
-  friends          User[]    @relation("Friends")
-  friend           User?     @relation("Friends", fields: [id, createdAt, name], references: [id, createdAt, name])
-
-  @@unique([id, createdAt, name])
-  @@index([id, createdAt(sort: Desc)])
+  id                      Int       @id @default(autoincrement())
+  createdAt               DateTime  @default(now())
+  name                    String?
+  channelsOwn             Int[]     @default([])
+  channelsParticipatingIn Int[]     @default([])
 }
 
 model Message {
-  id        Int      @unique @default(autoincrement())
-  content   String?
+  id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  toUser    Int?
-  from      User?    @relation("From User", fields: [fromUser], references: [id])
-  fromUser  Int?
-
-  @@id([createdAt])
+  content   String
+  fromUser  Int
+  toUser    Int
 }
 
 model Channel {
-  id           Int       @id @default(autoincrement())
-  createdAt    DateTime? @default(now())
-  channelOwner User?     @relation("Channels", fields: [userId], references: [id])
-  userId       Int
-  participants User[]
-
-  @@index([id, createdAt(sort: Desc)])
+  id           Int   @id @default(autoincrement())
+  createdBy    Int
+  participants Int[] @default([])
 }

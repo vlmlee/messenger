@@ -1,6 +1,6 @@
 import { PrismaService } from '../prisma.service';
 import { User } from './entity/users.entity';
-import { NewUser } from './entity/newUser.dto';
+import { NewUser } from './dto/newUser.dto';
 import { Injectable } from '@nestjs/common';
 import { ChannelService } from '../channels/channels.service';
 
@@ -9,7 +9,7 @@ export class UserService {
     constructor(private prisma: PrismaService, private channelService: ChannelService) {}
 
     async getAllUsers(): Promise<User[]> {
-        return this.prisma.user.findMany({});
+        return this.prisma.user.findMany();
     }
 
     async getUser(id: number): Promise<User> {
@@ -24,15 +24,28 @@ export class UserService {
         return this.prisma.user.create({
             data: {
                 name: user.name,
-                messagesFrom: {
-                    create: user.messagesFrom ?? []
-                },
-                friends: []
+                createdAt: new Date(),
+                channelsParticipatingIn: []
             }
         });
     }
 
-    async addChannelToUser(): Promise<User> {
-        return this.channelService.createChannel();
+    async addChannelToUser(channelId: number, userId: number): Promise<User> {
+        const user = await this.prisma.user.findUnique({
+            where: { id: userId }
+        });
+
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        const channelsParticipatingIn = user.channelsParticipatingIn || [];
+
+        return this.prisma.user.update({
+            where: { id: userId },
+            data: {
+                channelsParticipatingIn: [...channelsParticipatingIn, channelId]
+            }
+        });   
     }
 }

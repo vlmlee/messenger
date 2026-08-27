@@ -16,7 +16,7 @@ export class MessageService {
     }
 
     async getAllMessages(): Promise<Message[]> {
-        return this.prisma.message.findMany({});
+        return this.prisma.message.findMany();
     }
 
     async getAllMessagesByUserId(userId: number): Promise<Message[]> {
@@ -27,9 +27,9 @@ export class MessageService {
         });
     }
 
-    async postMessage(input: NewMessage): Promise<Message> {
+    async postMessage(message: NewMessage): Promise<Message> {
         return this.prisma.message.create({
-            data: input
+            data: message
         });
     }
 

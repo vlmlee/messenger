@@ -17,9 +17,14 @@ export class MessageResolver {
         return await this.messageService.getAllMessages();
     }
 
+    @Query(returns => [Message])
+    async getAllMessagesByUserId(@Args('userId', { type: () => Int }) userId: number): Promise<Message[]> {
+        return await this.messageService.getAllMessagesByUserId(userId);
+    }
+
     @Mutation(returns => Message)
-    async postMessage(@Args('input') input: NewMessage): Promise<Message> {
-        return await this.messageService.postMessage(input);
+    async postMessage(@Args('message') message: NewMessage): Promise<Message> {
+        return await this.messageService.postMessage(message);
     }
 
     @Mutation(returns => Message)

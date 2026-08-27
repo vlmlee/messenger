@@ -6,16 +6,22 @@ import { Channel } from './entity/channels.entity';
 export class ChannelService {
     constructor(private prisma: PrismaService) {}
 
-    async createChannel(userId: number): Promise<Channel> {
+    async createChannel(createdBy: number): Promise<Channel> {
+        if (!createdBy) {
+            throw new Error('User is required');
+        }
+
         return this.prisma.channel.create({
             data: {
-                userId: 0
+                id: Math.floor(Math.random() * 1000000),
+                createdBy: createdBy,
+                participants: [createdBy]
             }
         });
     }
 
-    async removeChannel(id: number): Promise<Channel> {
-        return this.prisma.channel.delete({
+    async removeChannel(id: number): Promise<void> {
+        await this.prisma.channel.delete({
             where: {
                 id: id
             }
@@ -23,14 +29,22 @@ export class ChannelService {
     }
 
     async joinChannel(id: number, userId: number): Promise<Channel> {
+        const channel = await this.prisma.channel.findUnique({
+            where: {
+                id: id
+            }
+        });
+        if (!channel) {
+            throw new Error('Channel not found');
+        }
+
+        const participants = channel.participants;
         return this.prisma.channel.update({
             where: {
                 id: id
             },
             data: {
-                participants: {
-                    push: userId
-                }
+                participants: [...participants, userId]
             }
         });
     }

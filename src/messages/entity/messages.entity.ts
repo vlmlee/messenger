@@ -11,7 +11,7 @@ export class Message {
 
     @Field(GraphQLISODateTime)
     @Column()
-    createdAt: Date;
+    createdAt: string;
 
     @Field()
     @Column()
@@ -19,9 +19,9 @@ export class Message {
 
     @Field(type => Int)
     @Column()
-    fromUser?: number;
+    fromUser: number;
 
     @Field(type => Int)
     @Column()
-    toUser?: number;
+    toUser: number;
 }

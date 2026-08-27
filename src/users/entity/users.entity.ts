@@ -9,19 +9,19 @@ export class User {
     @Column()
     id: number;
 
-    @Field(GraphQLISODateTime)
+    @Field(type =>GraphQLISODateTime)
     @Column()
-    createdAt: Date;
+    createdAt: string;
 
     @Field({ nullable: true })
     @Column()
     name: string;
 
-    @OneToMany(type => Message, (message: Message) => message.fromUser)
-    @Field(type => [Message], { nullable: true })
-    messagesFrom?: Message[];
+    @Field(type => [Int], { nullable: true, defaultValue: [] })
+    @Column({ default: [] })
+    channelsOwn: Array<number>;
 
-    @Field(type => [Int], { nullable: true })
-    @Column()
-    friends?: number[];
+    @Field(type => [Int], { nullable: true, defaultValue: [] })
+    @Column({ default: [] })
+    channelsParticipatingIn: Array<number>;
 }

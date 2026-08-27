@@ -6,8 +6,8 @@ export class NewMessage {
     content: string;
 
     @Field(type => Int)
-    fromUser?: number;
+    fromUser: number;
 
     @Field(type => Int)
-    toUser?: number;
+    toUser: number;
 }
