@@ -49,4 +49,27 @@ export class ChannelService {
             }
         });
     }
+
+    async leaveChannel(id: number, userId: number): Promise<Channel> {
+        const channel = await this.prisma.channel.findUnique({
+            where: {
+                id: id
+            }
+        });
+        if (!channel) {
+            throw new Error('Channel not found');
+        }
+
+        const participants = channel.participants;
+        const newParticipants = participants.filter(participant => participant !== userId);
+
+        return this.prisma.channel.update({
+            where: {
+                id: id
+            },
+            data: {
+                participants: newParticipants
+            }
+        });
+    }
 }
