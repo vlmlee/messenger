@@ -1,4 +1,4 @@
-@import 'fonts.css';
+@use 'fonts.css';
 
 :root {
     --sumi: #1c1c1c;
@@ -9,6 +9,9 @@
     --matrix-green-light: #00ff41;
     --shironeri: #fcfaf2;
     --font: 'Iosevka', 'Inter', Inconsolata, san-serif;
+    --crt-red: rgb(218, 49, 49);
+    --crt-green: rgb(112, 159, 115);
+    --crt-blue: rgb(40, 129, 206);
 }
 
 .App {
@@ -24,6 +27,46 @@
     flex-direction: row;
     font-family: var(--font);
     color: var(--shironeri);
+
+    .crt {
+        background: linear-gradient(to top, #000000, #000000, #333333, #333333);
+        background-size: cover;
+        background-size: 100% 1px;
+        color: #00ff00;
+        text-shadow: 0 0 5px #00ff00;
+        filter: blur(0.2px);
+
+        text-shadow: 0 0 0.2em currentColor, 1px 1px rgba(255, 0, 255, 0.5),
+            -1px -1px rgba(0, 255, 255, 0.4);
+
+        &:before,
+        &:after {
+            content: "";
+            transform: translateZ(0);
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            z-index: 1;
+            border-radius: 15px;
+        }
+
+        &:before {
+            background: repeating-linear-gradient(var(--crt-red) 0px,
+                    var(--crt-green) 2px,
+                    var(--crt-blue) 4px);
+        }
+
+        &:after {
+            background: repeating-linear-gradient(90deg,
+                    var(--crt-red) 1px,
+                    var(--crt-green) 2px,
+                    var(--crt-blue) 3px);
+        }
+    }
 
     .sidebar,
     .chat-window {
@@ -51,6 +94,7 @@
         row-gap: 15px;
         column-gap: 15px;
         gap: 15px;
+        box-shadow: 0 0 15px 2px rgba(0, 255, 41, 0.2);
 
         .channel:first-of-type {
             margin-top: 15px;
@@ -73,11 +117,9 @@
                 position: relative;
             }
 
-            &__user {
-            }
+            &__user {}
 
-            &__friend {
-            }
+            &__friend {}
 
             &:hover {
                 border: 2px solid var(--shironeri);
@@ -91,6 +133,7 @@
         flex-grow: 4;
         margin: 30px 30px 30px 15px;
         position: relative;
+        box-shadow: 0 0 15px 2px rgba(0, 255, 41, 0.2);
 
         &__connected-message {
             position: absolute;
@@ -130,13 +173,24 @@
                 right: 0;
                 width: 10%;
                 height: 100%;
-                color: var(--shironeri);
+                color: --matrix-green-light;
                 border-radius: 0 0 12px 0;
                 border-top: 2px solid var(--matrix-green-light);
                 background: var(--matrix-green-dark);
                 cursor: pointer;
+                text-shadow: 0 0 10px #00ff00;
+                filter: blur(0.25px);
+                transition: 0.2s color ease-in-out, 0.2s background-color ease-in-out;
+        
+                text-shadow: 0 0 0.2em currentColor, 1px 1px rgba(255, 0, 255, 0.5),
+                    -1px -1px rgba(0, 255, 255, 0.4);
 
                 &:active {
+                    background-color: var(--matrix-green-dark-lighter);
+                }
+
+                &:hover {
+                    color: white;
                     background-color: var(--matrix-green-dark-lighter);
                 }
             }
@@ -156,8 +210,10 @@
             column-gap: 15px;
             gap: 15px;
             overflow-y: scroll;
-            -ms-overflow-style: none; /* IE and Edge */
-            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
 
             &::-webkit-scrollbar {
                 display: none;
@@ -200,14 +256,11 @@
                     text-align: left;
                     background-color: var(--matrix-green-dark);
 
-                    &__name {
-                    }
+                    &__name {}
 
-                    &__content {
-                    }
+                    &__content {}
 
-                    &__timestamp {
-                    }
+                    &__timestamp {}
                 }
             }
         }
@@ -225,4 +278,20 @@ input[type='reset'] {
     font: inherit;
     cursor: text;
     outline: inherit;
+}
+
+@media screen {
+    .crt {
+        animation: scanlines infinite 55s linear;
+    }
+}
+
+@keyframes scanlines {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 0 -10px;
+    }
 }

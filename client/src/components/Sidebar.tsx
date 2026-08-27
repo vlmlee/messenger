@@ -1,10 +1,10 @@
 import * as React from 'react';
 import Channel from './Channel';
-import { IChannel, ISidebar } from 'typings';
+import { IChannel, ISidebar } from '../typings';
 
 const Sidebar = ({ channels, selectChannel }: ISidebar) => {
     return (
-        <div className={'sidebar'}>
+        <div className={'sidebar crt'}>
             {channels.map((c: IChannel) => (
                 <Channel id={c.id} user={c.user} friend={c.friend} selectChannel={selectChannel} />
             ))}

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ChangeEvent, useEffect, useState } from 'react';
 import ChatMessage from './ChatMessage';
-import { IChatMessage, IChatWindow } from 'typings';
+import { IChatMessage, IChatWindow } from '../typings';
 import { gql, useMutation, useQuery } from '@apollo/client';
 
 const POST_MESSAGE = gql`
@@ -72,7 +72,7 @@ const ChatWindow = ({ loading, selectedChannel }: IChatWindow) => {
     }, [messageToSend]);
 
     return (
-        <div className={'chat-window'}>
+        <div className={'chat-window crt'}>
             <div className={'chat-window__connected-message'}>{loading ? 'Loading...' : 'Connected.'}</div>
             <div className={'chat-window__messages-container'} id={'chat-window__messages-container'}>
                 {messages?.map((m: IChatMessage, i: number, arr: any) => (
@@ -90,7 +90,7 @@ const ChatWindow = ({ loading, selectedChannel }: IChatWindow) => {
                 <input
                     onChange={(e: ChangeEvent<HTMLInputElement>) => updateMessage(e)}
                     value={messageToSend}
-                    placeholder={'Welcome to the internet!'}
+                    placeholder={'Say something...'}
                 />
                 <button onClick={(e: any) => sendMessage(e)}>Send</button>
             </div>
