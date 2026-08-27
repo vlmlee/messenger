@@ -15,18 +15,18 @@ export class UserResolver {
     }
 
     @Query(returns => User)
-    async user(@Args('id', { type: () => Int }) id: number): Promise<User> {
+    async getUser(@Args('id', { type: () => Int }) id: number): Promise<User> {
         return await this.userService.getUser(id);
     }
 
     @ResolveField()
-    async messagesFrom(@Parent() user: User): Promise<Message[]> {
+    async getMessagesByUser(@Parent() user: User): Promise<Message[]> {
         const { id } = user;
         return await this.messageService.getAllMessagesByUserId(id);
     }
 
     @Mutation(returns => User)
     async createUser(@Args('user') user: NewUser): Promise<User> {
-        return await this.userService.addUser(user);
+        return await this.userService.createUser(user);
     }
 }

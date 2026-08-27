@@ -11,7 +11,7 @@ export class User {
 
     @Field(type =>GraphQLISODateTime)
     @Column()
-    createdAt: string;
+    createdAt: Date;
 
     @Field({ nullable: true })
     @Column()

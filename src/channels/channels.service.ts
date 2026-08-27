@@ -39,6 +39,7 @@ export class ChannelService {
         }
 
         const participants = channel.participants;
+
         return this.prisma.channel.update({
             where: {
                 id: id
