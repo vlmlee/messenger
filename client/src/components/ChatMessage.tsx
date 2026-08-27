@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IChatMessage } from 'typings';
+import { IChatMessage } from '../typings';
 
 const ChatMessage = ({ lastElement, name, content, timestamp, isUser }: IChatMessage) => (
     <div

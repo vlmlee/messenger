@@ -1,7 +1,11 @@
 import * as React from 'react';
 import { IChannel } from '../typings';
+import { IUser } from '../typings';
 
 interface IChannelComponent extends IChannel {
+    id: number;
+    user: IUser;
+    friend: IUser;
     selectChannel: (id?: number) => void;
 }
 

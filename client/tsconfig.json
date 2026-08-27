@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "jsx": "react",
+        "module": "NodeNext",
         "moduleResolution": "NodeNext",
         "paths": {
             "~*": ["./*"]
@@ -11,7 +12,6 @@
         "target": "ES2017",
         "allowSyntheticDefaultImports": true,
         "ignoreDeprecations": "6.0"
-   
     },
     "include": ["src/**/*"],
     "exclude": ["node_modules", "dist"]
