@@ -6,10 +6,6 @@ directive @upper on FIELD_DEFINITION
 
 type Message {
   id: Int!
-
-  """
-  A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-  """
   createdAt: DateTime!
   content: String!
   fromUser: Int!
@@ -23,10 +19,6 @@ scalar DateTime
 
 type User {
   id: Int!
-
-  """
-  A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-  """
   createdAt: DateTime!
   name: String
   channelsOwn: [Int!]
@@ -38,20 +30,6 @@ type Channel {
   id: Int!
   createdBy: Int!
   participants: [Int!]!
-}
-
-input NewMessageInput {
-  content: String!
-  fromUser: Int!
-  toUser: Int!
-}
-
-input NewUserInput {
-  name: String
-}
-
-input NewChannelInput {
-  createdBy: Int!
 }
 
 type Query {
@@ -72,4 +50,18 @@ type Mutation {
   removeChannel(id: Int!): Channel!
   joinChannel(id: Int!, userId: Int!): Channel!
   leaveChannel(id: Int!, userId: Int!): Channel!
+}
+
+input NewMessageInput {
+  content: String!
+  fromUser: Int!
+  toUser: Int!
+}
+
+input NewUserInput {
+  name: String
+}
+
+input NewChannelInput {
+  createdBy: Int!
 }

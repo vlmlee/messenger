@@ -25,6 +25,13 @@ export interface IChatWindow {
     friend?: IFriend;
     selectedChannel?: IChannel;
     loading?: boolean;
+    disabled?: boolean;
+}
+
+export interface IEnterNameModal {
+    onSubmit: (name: string) => Promise<void> | void;
+    submitting?: boolean;
+    error?: string;
 }
 
 export interface IChatMessage {

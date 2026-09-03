@@ -2,19 +2,21 @@ import * as React from 'react';
 import { ChangeEvent, useEffect, useState } from 'react';
 import ChatMessage from './ChatMessage';
 import { IChatMessage, IChatWindow } from '../typings';
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 
 const POST_MESSAGE = gql`
-    mutation PostMessage($input: NewMessageInput!) {
-        postMessage(input: $input) {
+    mutation PostMessage($message: NewMessageInput!) {
+        postMessage(message: $message) {
+            id
             fromUser
             toUser
             content
+            createdAt
         }
     }
 `;
 
-const ChatWindow = ({ loading, selectedChannel }: IChatWindow) => {
+const ChatWindow = ({ loading, selectedChannel, disabled }: IChatWindow) => {
     const [postMessage, { data, error }] = useMutation(POST_MESSAGE);
     const [messageToSend, setMessageToSend] = useState('');
 
@@ -31,9 +33,13 @@ const ChatWindow = ({ loading, selectedChannel }: IChatWindow) => {
     };
 
     const sendMessage = async (e: Event) => {
+        if (disabled || !user?.id || !messageToSend.trim()) {
+            return;
+        }
+
         await postMessage({
             variables: {
-                input: {
+                message: {
                     content: messageToSend,
                     fromUser: user?.id,
                     toUser: friend?.id
@@ -51,8 +57,10 @@ const ChatWindow = ({ loading, selectedChannel }: IChatWindow) => {
         // hack
         setTimeout(() => {
             const element = document.getElementById('last-message');
-            // @ts-ignore
-            element.parentNode!.scrollTop = 10000;
+            if (element) {
+                // @ts-ignore
+                element.parentNode!.scrollTop = 10000;
+            }
         }, 1500);
 
         setMessageToSend('');
@@ -64,12 +72,16 @@ const ChatWindow = ({ loading, selectedChannel }: IChatWindow) => {
     };
 
     useEffect(() => {
+        if (disabled) {
+            return;
+        }
+
         document.addEventListener('keypress', handleOnEnter);
 
         return () => {
             document.removeEventListener('keypress', handleOnEnter);
         };
-    }, [messageToSend]);
+    }, [messageToSend, disabled]);
 
     return (
         <div className={'chat-window crt'}>
@@ -91,8 +103,11 @@ const ChatWindow = ({ loading, selectedChannel }: IChatWindow) => {
                     onChange={(e: ChangeEvent<HTMLInputElement>) => updateMessage(e)}
                     value={messageToSend}
                     placeholder={'Say something...'}
+                    disabled={disabled}
                 />
-                <button onClick={(e: any) => sendMessage(e)}>Send</button>
+                <button onClick={(e: any) => sendMessage(e)} disabled={disabled}>
+                    Send
+                </button>
             </div>
             <div className={'chat-window__background'} />
         </div>

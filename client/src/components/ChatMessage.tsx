@@ -11,8 +11,10 @@ const ChatMessage = ({ lastElement, name, content, timestamp, isUser }: IChatMes
             <div className={'chat-message__name'}>
                 From: <span>{name}</span>
             </div>
-            <div className={'chat-message__timestamp'}>At: {timestamp}</div>
-            <div className={'chat-message__content'}>Message: {content}</div>
+            <div className={'chat-message__timestamp'}>At: {timestamp ? new Date(timestamp).toLocaleString() : ''}</div>
+            <div className={'chat-message__content'}>Message: 
+                <p>{content}</p>
+            </div>
         </div>
     </div>
 );
