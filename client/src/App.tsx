@@ -34,6 +34,16 @@ const CREATE_USER = gql`
     }
 `;
 
+const GET_ALL_CHANNELS = gql`
+    query GetAllChannels {
+        getAllChannels {
+            id
+            createdBy
+            participants
+        }
+    }
+`;
+
 const readStoredUser = (): IUser | null => {
     try {
         const stored = localStorage.getItem(CURRENT_USER_KEY);
@@ -52,6 +62,9 @@ export default () => {
     });
     const [currentUser, setCurrentUser] = useState<IUser | null>(readStoredUser);
     const [modalError, setModalError] = useState('');
+    const { loading: channelsLoading, data: channelsData } = useQuery(GET_ALL_CHANNELS);
+    const channels = channelsData?.getAllChannels ?? [];
+
     const [selectedChannel, setSelectedChannel] = useState<IChannel>({});
     const hasValidatedSession = useRef(false);
 
@@ -132,7 +145,7 @@ export default () => {
 
     return (
         <main className={'App'}>
-            <Sidebar channels={[selectedChannel]} selectChannel={selectChannel} />
+            <Sidebar channels={channels} selectChannel={selectChannel} />
             <ChatWindow loading={loading} selectedChannel={selectedChannel} disabled={!currentUser} />
             {!currentUser ? (
                 <EnterNameModal onSubmit={handleEnterName} submitting={creatingUser} error={modalError} />
