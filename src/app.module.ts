@@ -3,9 +3,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { MessageModule } from './messages/messages.module';
 import { UserModule } from './users/users.module';
+import { ChannelModule } from './channels/channels.module';
 import { DirectiveLocation, GraphQLDirective } from 'graphql';
 import { upperDirectiveTransformer } from './common/directives/upper-case.directive';
 import { ServeStaticModule } from '@nestjs/serve-static';
@@ -18,18 +18,7 @@ dotenv.config();
     imports: [
         MessageModule,
         UserModule,
-        TypeOrmModule.forRootAsync({
-            useFactory: () => {
-                return {
-                    name: 'railway',
-                    type: 'postgres',
-                    logging: true,
-                    url: process.env.DATABASE_URL,
-                    entities: [__dirname + '/**/**.entity{.ts,.js}'],
-                    synchronize: true // should not use in production as you can lose data
-                };
-            }
-        }),
+        ChannelModule,
         GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
             autoSchemaFile: 'schema.gql',

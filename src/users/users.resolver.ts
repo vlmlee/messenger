@@ -14,15 +14,14 @@ export class UserResolver {
         return await this.userService.getAllUsers();
     }
 
-    @Query(returns => User)
-    async getUser(@Args('id', { type: () => Int }) id: number): Promise<User> {
+    @Query(returns => User, { nullable: true })
+    async getUser(@Args('id', { type: () => Int }) id: number): Promise<User | null> {
         return await this.userService.getUser(id);
     }
 
-    @ResolveField()
-    async getMessagesByUser(@Parent() user: User): Promise<Message[]> {
-        const { id } = user;
-        return await this.messageService.getAllMessagesByUserId(id);
+    @ResolveField('messages', returns => [Message], { nullable: true })
+    async messages(@Parent() user: User): Promise<Message[]> {
+        return await this.messageService.getAllMessagesByUserId(user.id);
     }
 
     @Mutation(returns => User)

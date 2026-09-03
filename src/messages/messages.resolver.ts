@@ -7,8 +7,8 @@ import { NewMessage } from './dto/newMessage.dto';
 export class MessageResolver {
     constructor(private readonly messageService: MessageService) {}
 
-    @Query(returns => Message)
-    async getMessage(@Args('id', { type: () => Int }) id: number): Promise<Message> {
+    @Query(returns => Message, { nullable: true })
+    async getMessage(@Args('id', { type: () => Int }) id: number): Promise<Message | null> {
         return await this.messageService.getMessage(id);
     }
 
@@ -18,7 +18,9 @@ export class MessageResolver {
     }
 
     @Query(returns => [Message])
-    async getAllMessagesByUserId(@Args('userId', { type: () => Int }) userId: number): Promise<Message[]> {
+    async getAllMessagesByUserId(
+        @Args('userId', { type: () => Int }) userId: number
+    ): Promise<Message[]> {
         return await this.messageService.getAllMessagesByUserId(userId);
     }
 
@@ -28,7 +30,7 @@ export class MessageResolver {
     }
 
     @Mutation(returns => Message)
-    async deleteMessage(@Args('id') id: number): Promise<Message> {
+    async deleteMessage(@Args('id', { type: () => Int }) id: number): Promise<Message> {
         return await this.messageService.deleteMessage(id);
     }
 }

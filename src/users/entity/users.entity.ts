@@ -1,26 +1,23 @@
 import { Field, GraphQLISODateTime, Int, ObjectType } from '@nestjs/graphql';
-import { Column, Entity } from 'typeorm';
+import { Message } from '../../messages/entity/messages.entity';
 
 @ObjectType()
-@Entity()
 export class User {
     @Field(type => Int)
-    @Column()
     id: number;
 
-    @Field(type =>GraphQLISODateTime)
-    @Column()
+    @Field(type => GraphQLISODateTime)
     createdAt: Date;
 
     @Field({ nullable: true })
-    @Column()
-    name: string;
+    name?: string;
 
     @Field(type => [Int], { nullable: true, defaultValue: [] })
-    @Column({ default: [] })
-    channelsOwn: Array<number>;
+    channelsOwn: number[];
 
     @Field(type => [Int], { nullable: true, defaultValue: [] })
-    @Column({ default: [] })
-    channelsParticipatingIn: Array<number>;
+    channelsParticipatingIn: number[];
+
+    @Field(type => [Message], { nullable: true })
+    messages?: Message[];
 }

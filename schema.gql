@@ -10,7 +10,7 @@ type Message {
   """
   A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
   """
-  DateTime: DateTime!
+  createdAt: DateTime!
   content: String!
   fromUser: Int!
   toUser: Int!
@@ -27,35 +27,17 @@ type User {
   """
   A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
   """
-  DateTime: DateTime!
+  createdAt: DateTime!
   name: String
-  messagesFrom: [Message!]
-  friends: [Int!]
+  channelsOwn: [Int!]
+  channelsParticipatingIn: [Int!]
+  messages: [Message!]
 }
 
-input MessageInput {
+type Channel {
   id: Int!
-
-  """
-  A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-  """
-  DateTime: DateTime!
-  content: String!
-  fromUser: Int!
-  toUser: Int!
-}
-
-type Query {
-  getMessage(id: Int!): Message!
-  getAllMessages: [Message!]!
-  getAllUsers: [User!]!
-  user(id: Int!): User!
-}
-
-type Mutation {
-  postMessage(input: NewMessageInput!): Message!
-  deleteMessage(id: Float!): Message!
-  createUser(user: NewUserInput!): User!
+  createdBy: Int!
+  participants: [Int!]!
 }
 
 input NewMessageInput {
@@ -65,8 +47,29 @@ input NewMessageInput {
 }
 
 input NewUserInput {
-  id: Int
   name: String
-  messagesFrom: [MessageInput!]
-  friends: [Int!]
+}
+
+input NewChannelInput {
+  createdBy: Int!
+}
+
+type Query {
+  getMessage(id: Int!): Message
+  getAllMessages: [Message!]!
+  getAllMessagesByUserId(userId: Int!): [Message!]!
+  getAllUsers: [User!]!
+  getUser(id: Int!): User
+  getAllChannels: [Channel!]!
+  getChannel(id: Int!): Channel
+}
+
+type Mutation {
+  postMessage(message: NewMessageInput!): Message!
+  deleteMessage(id: Int!): Message!
+  createUser(user: NewUserInput!): User!
+  createChannel(channel: NewChannelInput!): Channel!
+  removeChannel(id: Int!): Channel!
+  joinChannel(id: Int!, userId: Int!): Channel!
+  leaveChannel(id: Int!, userId: Int!): Channel!
 }

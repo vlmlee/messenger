@@ -1,0 +1,8 @@
+allowBuilds:
+  '@apollo/protobufjs': false
+  '@nestjs/core': false
+  '@prisma/client': false
+  '@prisma/engines': false
+  bufferutil: false
+  prisma: false
+  utf-8-validate: false
