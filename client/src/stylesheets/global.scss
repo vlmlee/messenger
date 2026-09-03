@@ -4,8 +4,8 @@
     --sumi: #1c1c1c;
     --kurotsurubami: #0b1013;
     --shironezumi: #bdc0ba;
-    --matrix-green-dark: #003b00;
-    --matrix-green-dark-lighter: #004400;
+    --matrix-green-dark: #002f00;
+    --matrix-green-dark-lighter: #005F00;
     --matrix-green-light: #00ff41;
     --shironeri: #fcfaf2;
     --font: 'Iosevka', 'Inter', Inconsolata, san-serif;
@@ -173,7 +173,7 @@
     }
 
     .chat-window {
-        flex-grow: 4;
+        flex-grow: 10;
         margin: 30px 30px 30px 15px;
         position: relative;
         box-shadow: 0 0 15px 2px rgba(0, 255, 41, 0.2);
