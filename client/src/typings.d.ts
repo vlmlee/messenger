@@ -18,6 +18,9 @@ export interface IUser {
 export interface ISidebar {
     channels: IChannel[];
     selectChannel: (id?: number) => void;
+    onCreateChannel?: () => void;
+    creatingChannel?: boolean;
+    disabled?: boolean;
 }
 
 export interface IChatWindow {

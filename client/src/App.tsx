@@ -44,6 +44,16 @@ const GET_ALL_CHANNELS = gql`
     }
 `;
 
+const CREATE_CHANNEL = gql`
+    mutation CreateChannel($channel: NewChannelInput!) {
+        createChannel(channel: $channel) {
+            id
+            createdBy
+            participants
+        }
+    }
+`;
+
 const readStoredUser = (): IUser | null => {
     try {
         const stored = localStorage.getItem(CURRENT_USER_KEY);
@@ -60,6 +70,9 @@ export default () => {
     const [createUser, { loading: creatingUser }] = useMutation(CREATE_USER, {
         refetchQueries: [{ query: GET_ALL_USERS }]
     });
+    const [createChannel, { loading: creatingChannel }] = useMutation(CREATE_CHANNEL, {
+        refetchQueries: [{ query: GET_ALL_CHANNELS }]
+    });
     const [currentUser, setCurrentUser] = useState<IUser | null>(readStoredUser);
     const [modalError, setModalError] = useState('');
     const { loading: channelsLoading, data: channelsData } = useQuery(GET_ALL_CHANNELS);
@@ -75,6 +88,19 @@ export default () => {
     const selectChannel = (id?: number) => {
         if (id !== undefined || id !== null) {
         }
+    };
+
+    const handleCreateChannel = async () => {
+        if (!currentUser?.id) {
+            return;
+        }
+        await createChannel({
+            variables: {
+                channel: {
+                    createdBy: currentUser.id
+                }
+            }
+        });
     };
 
     const handleEnterName = async (name: string) => {
@@ -145,7 +171,13 @@ export default () => {
 
     return (
         <main className={'App'}>
-            <Sidebar channels={channels} selectChannel={selectChannel} />
+            <Sidebar
+                channels={channels}
+                selectChannel={selectChannel}
+                onCreateChannel={handleCreateChannel}
+                creatingChannel={creatingChannel}
+                disabled={!currentUser}
+            />
             <ChatWindow loading={loading} selectedChannel={selectedChannel} disabled={!currentUser} />
             {!currentUser ? (
                 <EnterNameModal onSubmit={handleEnterName} submitting={creatingUser} error={modalError} />

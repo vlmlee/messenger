@@ -91,10 +91,53 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        row-gap: 15px;
-        column-gap: 15px;
-        gap: 15px;
+        overflow: hidden;
         box-shadow: 0 0 15px 2px rgba(0, 255, 41, 0.2);
+
+        &__channels {
+            flex: 1;
+            width: 100%;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+        }
+
+        &__create-channel {
+            position: relative;
+            z-index: 2;
+            flex-shrink: 0;
+            width: calc(100% - 30px);
+            height: 48px;
+            margin: 15px 0;
+            border: 2px solid var(--matrix-green-light);
+            border-radius: 10px;
+            background: var(--matrix-green-dark);
+            color: var(--matrix-green-light);
+            cursor: pointer;
+            text-shadow: 0 0 0.2em currentColor, 1px 1px rgba(255, 0, 255, 0.5),
+                -1px -1px rgba(0, 255, 255, 0.4);
+            transition: 0.2s color ease-in-out, 0.2s background-color ease-in-out, 0.2s border ease-in-out;
+
+            &:hover:not(:disabled) {
+                border: 2px solid var(--shironeri);
+                background-color: var(--matrix-green-dark-lighter);
+                color: var(--shironeri);
+            }
+
+            &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+        }
 
         .channel:first-of-type {
             margin-top: 15px;
@@ -147,19 +190,24 @@
 
         &__input-container {
             position: absolute;
-            bottom: 0;
-            z-index: 1;
-            width: 100%;
+            bottom: 15px;
+            left: 15px;
+            z-index: 2;
+            width: calc(100% - 30px);
             height: 50px;
+            box-sizing: border-box;
+            border: 2px solid var(--matrix-green-light);
+            border-radius: 10px;
+            overflow: hidden;
 
             input {
                 width: 90%;
                 height: 100%;
                 box-sizing: border-box;
                 padding-left: 20px;
-                border-radius: 0 0 0 12px;
-                border-top: 2px solid var(--matrix-green-light);
-                border-right: 3px solid var(--matrix-green-light);
+                border-radius: 0;
+                border: none;
+                border-right: 2px solid var(--matrix-green-light);
                 background-color: var(--kurotsurubami);
                 color: var(--shironeri);
 
@@ -174,8 +222,8 @@
                 width: 10%;
                 height: 100%;
                 color: --matrix-green-light;
-                border-radius: 0 0 12px 0;
-                border-top: 2px solid var(--matrix-green-light);
+                border-radius: 0;
+                border: none;
                 background: var(--matrix-green-dark);
                 cursor: pointer;
                 text-shadow: 0 0 10px #00ff00;
@@ -198,11 +246,11 @@
 
         &__messages-container {
             position: absolute;
-            height: calc(100% - 120px);
+            height: calc(100% - 135px);
             width: 100%;
             z-index: 1;
             padding-top: 70px;
-            padding-bottom: 30px;
+            padding-bottom: 45px;
             display: flex;
             flex-direction: column;
             color: var(--matrix-green-light);
