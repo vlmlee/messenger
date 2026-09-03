@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import Sidebar from './components/Sidebar';
 import ChatWindow from './components/ChatWindow';
 import EnterNameModal from './components/EnterNameModal';
-import { IChannel, IUser } from 'typings';
+import { IChannel, IUser } from './typings';
 import './stylesheets/global.scss';
 import { gql, useMutation, useQuery } from '@apollo/client';
 
@@ -63,6 +63,10 @@ const readStoredUser = (): IUser | null => {
     }
 };
 
+const mapIdToUser = (id: number, users: IUser[]) => {
+    return users.find((u: IUser) => u.id === id) ?? null;
+};
+
 export default () => {
     const { loading, data } = useQuery(GET_ALL_USERS, {
         pollInterval: 500
@@ -76,7 +80,6 @@ export default () => {
     const [currentUser, setCurrentUser] = useState<IUser | null>(readStoredUser);
     const [modalError, setModalError] = useState('');
     const { loading: channelsLoading, data: channelsData } = useQuery(GET_ALL_CHANNELS);
-    const channels = channelsData?.getAllChannels ?? [];
 
     const [selectedChannel, setSelectedChannel] = useState<IChannel>({});
     const hasValidatedSession = useRef(false);
@@ -84,6 +87,11 @@ export default () => {
     const users = data?.getAllUsers ?? [];
     const user = users.find((u: any) => u.id === currentUser?.id) ?? currentUser;
     const friend = users.find((u: any) => u.id !== currentUser?.id);
+    const channels = channelsData?.getAllChannels.map((c: any) => ({
+        id: c.id,
+        createdBy: mapIdToUser(c.createdBy, users)?.name ?? '',
+        participants: c.participants.map((p: number) => mapIdToUser(p, users)?.name ?? '')
+    })) ?? [];
 
     const selectChannel = (id?: number) => {
         if (id !== undefined || id !== null) {

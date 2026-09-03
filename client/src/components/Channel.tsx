@@ -4,16 +4,16 @@ import { IUser } from '../typings';
 
 interface IChannelComponent extends IChannel {
     id?: number;
-    user?: IUser;
-    friend?: IUser;
+    createdBy?: string;
+    participants?: string[];
     selectChannel: (id?: number) => void;
 }
 
-const Channel = ({ id, user, friend, selectChannel }: IChannelComponent) => (
+const Channel = ({ id, createdBy, participants, selectChannel }: IChannelComponent) => (
     <div className={'channel'} onClick={() => selectChannel(id)}>
-        <div>Channel id: {id}</div>
-        <div className={'channel__user'}> &gt; &#91;{user?.name}&#93; (You)</div>
-        <div className={'channel__friend'}> &gt; &#91;{friend?.name}&#93;</div>
+        <div>Channel id: &#91;{id}&#93;</div>
+        <div className={'channel__user'}> Created by: &#91;{createdBy}&#93; (You)</div>
+        <div className={'channel__friend'}> Participants: {participants?.map((p: string) => <p key={p}> &gt; &#91;{p}&#93;</p>)}</div>
     </div>
 );
 

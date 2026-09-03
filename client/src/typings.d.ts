@@ -1,7 +1,7 @@
 export interface IChannel {
     id?: number;
-    user?: IUser;
-    friend?: IFriend;
+    createdBy?: string;
+    participants?: string[];
     messages?: IChatMessage[];
 }
 

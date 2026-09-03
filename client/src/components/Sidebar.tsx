@@ -6,15 +6,17 @@ const Sidebar = ({ channels, selectChannel, onCreateChannel, creatingChannel, di
     return (
         <div className={'sidebar crt'}>
             <div className={'sidebar__channels'}>
-                {channels.map((c: IChannel) => (
-                    <Channel
-                        key={c.id}
-                        id={c.id}
-                        user={c.user}
-                        friend={c.friend}
-                        selectChannel={selectChannel}
-                    />
-                ))}
+                {channels.map((c: IChannel) => {
+                    return (
+                        <Channel
+                            key={c.id}
+                            id={c.id}
+                            createdBy={c.createdBy}
+                            participants={c.participants}
+                            selectChannel={selectChannel}
+                        />
+                    );
+                })}
             </div>
             <button
                 className={'sidebar__create-channel'}
