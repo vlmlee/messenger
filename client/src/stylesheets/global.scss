@@ -258,7 +258,11 @@
 
                     &__name {}
 
-                    &__content {}
+                    &__content {
+                        p {
+                            margin-bottom: 0;
+                        }
+                    }
 
                     &__timestamp {}
                 }
