@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
         "jsx": "react",
-        "module": "NodeNext",
-        "moduleResolution": "NodeNext",
+        "module": "ESNext",
+        "moduleResolution": "Node",
         "paths": {
             "~*": ["./*"]
         },
@@ -11,7 +11,9 @@
         "strict": true,
         "target": "ES2017",
         "allowSyntheticDefaultImports": true,
-        "ignoreDeprecations": "6.0"
+        "ignoreDeprecations": "6.0",
+        "skipLibCheck": true,
+        "types": ["vite/client"]
     },
     "include": ["src/**/*"],
     "exclude": ["node_modules", "dist"]
