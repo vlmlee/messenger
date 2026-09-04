@@ -3,6 +3,8 @@ export interface IChannel {
     createdBy?: string;
     participants?: string[];
     messages?: IChatMessage[];
+    user?: IUser;
+    friend?: IFriend;
 }
 
 export interface IFriend {
@@ -18,6 +20,7 @@ export interface IUser {
 export interface ISidebar {
     channels: IChannel[];
     selectChannel: (id?: number) => void;
+    selectedChannelId?: number;
     onCreateChannel?: () => void;
     creatingChannel?: boolean;
     disabled?: boolean;
@@ -26,6 +29,7 @@ export interface ISidebar {
 export interface IChatWindow {
     user?: IUser;
     friend?: IFriend;
+    users?: IUser[];
     selectedChannel?: IChannel;
     loading?: boolean;
     disabled?: boolean;
@@ -44,6 +48,7 @@ export interface IChatMessage {
     timestamp?: string;
     fromUser?: number;
     toUser?: number;
+    channelId?: number;
     isUser?: boolean;
     lastElement?: boolean;
 }

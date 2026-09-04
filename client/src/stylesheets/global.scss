@@ -162,12 +162,11 @@
 
             &__user {}
 
-            &__friend {}
-
-            &:hover {
-                border: 2px solid var(--shironeri);
-                background-color: var(--matrix-green-dark-lighter);
-                color: var(--shironeri);
+            &__friend {
+                p {
+                    margin: 0px;
+                    padding: 0px;
+                }
             }
         }
     }
@@ -262,6 +261,12 @@
             /* IE and Edge */
             scrollbar-width: none;
             /* Firefox */
+            opacity: 1;
+            transition: opacity 0.22s ease-in-out;
+
+            &--fading {
+                opacity: 0;
+            }
 
             &::-webkit-scrollbar {
                 display: none;

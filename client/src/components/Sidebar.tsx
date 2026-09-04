@@ -2,7 +2,14 @@ import * as React from 'react';
 import Channel from './Channel';
 import { IChannel, ISidebar } from '../typings';
 
-const Sidebar = ({ channels, selectChannel, onCreateChannel, creatingChannel, disabled }: ISidebar) => {
+const Sidebar = ({
+    channels,
+    selectChannel,
+    selectedChannelId,
+    onCreateChannel,
+    creatingChannel,
+    disabled
+}: ISidebar) => {
     return (
         <div className={'sidebar crt'}>
             <div className={'sidebar__channels'}>
@@ -14,6 +21,7 @@ const Sidebar = ({ channels, selectChannel, onCreateChannel, creatingChannel, di
                             createdBy={c.createdBy}
                             participants={c.participants}
                             selectChannel={selectChannel}
+                            isSelected={c.id === selectedChannelId}
                         />
                     );
                 })}

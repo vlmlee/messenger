@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { ChangeEvent, useEffect, useState } from 'react';
 import ChatMessage from './ChatMessage';
-import { IChatMessage, IChatWindow } from '../typings';
+import { IChatMessage, IChatWindow, IUser } from '../typings';
 import { gql, useMutation } from '@apollo/client';
+
+const CHANNEL_FADE_MS = 220;
 
 const POST_MESSAGE = gql`
     mutation PostMessage($message: NewMessageInput!) {
@@ -10,21 +12,62 @@ const POST_MESSAGE = gql`
             id
             fromUser
             toUser
+            channelId
             content
             createdAt
         }
     }
 `;
 
-const ChatWindow = ({ loading, selectedChannel, disabled }: IChatWindow) => {
-    const [postMessage, { data, error }] = useMutation(POST_MESSAGE);
+const ChatWindow = ({ loading, selectedChannel, users, disabled }: IChatWindow) => {
+    const [postMessage] = useMutation(POST_MESSAGE);
     const [messageToSend, setMessageToSend] = useState('');
 
-    const { user, friend, messages } = selectedChannel ?? {
-        id: 0,
+    const { id: channelId, user, friend, messages } = selectedChannel ?? {
+        id: undefined,
         user: null,
         friend: null,
         messages: []
+    };
+
+    const [displayedChannelId, setDisplayedChannelId] = useState(channelId);
+    const [isFading, setIsFading] = useState(false);
+
+    useEffect(() => {
+        if (channelId === displayedChannelId) {
+            return;
+        }
+
+        setIsFading(true);
+        const swap = window.setTimeout(() => {
+            setDisplayedChannelId(channelId);
+        }, CHANNEL_FADE_MS);
+
+        return () => window.clearTimeout(swap);
+    }, [channelId, displayedChannelId]);
+
+    useEffect(() => {
+        if (!isFading || displayedChannelId !== channelId) {
+            return;
+        }
+
+        const show = window.setTimeout(() => {
+            setIsFading(false);
+        }, 16);
+
+        return () => window.clearTimeout(show);
+    }, [isFading, displayedChannelId, channelId]);
+
+    const channelMessages = (messages ?? []).filter(
+        (m: IChatMessage) => m.channelId === displayedChannelId
+    );
+
+    const senderName = (fromUser?: number) => {
+        if (fromUser === user?.id) {
+            return user?.name;
+        }
+        const sender = users?.find((u: IUser) => u.id === fromUser);
+        return sender?.name ?? friend?.name ?? '';
     };
 
     const updateMessage = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +76,7 @@ const ChatWindow = ({ loading, selectedChannel, disabled }: IChatWindow) => {
     };
 
     const sendMessage = async (e: Event) => {
-        if (disabled || !user?.id || !messageToSend.trim()) {
+        if (disabled || !user?.id || channelId == null || !messageToSend.trim()) {
             return;
         }
 
@@ -41,8 +84,9 @@ const ChatWindow = ({ loading, selectedChannel, disabled }: IChatWindow) => {
             variables: {
                 message: {
                     content: messageToSend,
-                    fromUser: user?.id,
-                    toUser: friend?.id
+                    fromUser: user.id,
+                    toUser: friend?.id || 0,
+                    channelId
                 }
             }
         });
@@ -81,18 +125,23 @@ const ChatWindow = ({ loading, selectedChannel, disabled }: IChatWindow) => {
         return () => {
             document.removeEventListener('keypress', handleOnEnter);
         };
-    }, [messageToSend, disabled]);
+    }, [messageToSend, disabled, channelId]);
 
     return (
         <div className={'chat-window crt'}>
             <div className={'chat-window__connected-message'}>{loading ? 'Loading...' : 'Connected.'}</div>
-            <div className={'chat-window__messages-container'} id={'chat-window__messages-container'}>
-                {messages?.map((m: IChatMessage, i: number, arr: any) => (
+            <div
+                className={
+                    'chat-window__messages-container' +
+                    (isFading ? ' chat-window__messages-container--fading' : '')
+                }
+                id={'chat-window__messages-container'}>
+                {channelMessages.map((m: IChatMessage, i: number, arr: IChatMessage[]) => (
                     <ChatMessage
                         lastElement={i === arr.length - 1}
                         key={`${m.timestamp}${i}`}
                         isUser={m.fromUser === user?.id}
-                        name={user?.id === m.fromUser ? user?.name : friend?.name}
+                        name={senderName(m.fromUser)}
                         content={m.content}
                         timestamp={m.timestamp}
                     />
