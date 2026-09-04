@@ -25,6 +25,7 @@ model Message {
   content   String
   fromUser  Int
   toUser    Int
+  channelId Int
 }
 
 model Channel {

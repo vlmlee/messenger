@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Message" ADD COLUMN "channelId" INTEGER NOT NULL DEFAULT 1;
+
+ALTER TABLE "Message" ALTER COLUMN "channelId" DROP DEFAULT;

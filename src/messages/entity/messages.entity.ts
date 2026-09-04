@@ -16,4 +16,7 @@ export class Message {
 
     @Field(type => Int)
     toUser: number;
+
+    @Field(type => Int)
+    channelId: number;
 }

@@ -56,6 +56,7 @@ input NewMessageInput {
   content: String!
   fromUser: Int!
   toUser: Int!
+  channelId: Int!
 }
 
 input NewUserInput {

@@ -10,4 +10,7 @@ export class NewMessage {
 
     @Field(type => Int)
     toUser: number;
+
+    @Field(type => Int)
+    channelId: number;
 }

@@ -94,7 +94,8 @@ export default () => {
     })) ?? [];
 
     const selectChannel = (id?: number) => {
-        if (id !== undefined || id !== null) {
+        if (id !== undefined && id !== null) {
+            setSelectedChannel(channels.find((c: IChannel) => c.id === id) ?? {});
         }
     };
 
