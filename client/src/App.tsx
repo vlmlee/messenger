@@ -282,6 +282,7 @@ export default () => {
                 onCreateChannel={handleCreateChannel}
                 creatingChannel={creatingChannel}
                 disabled={!currentUser}
+                currentUser={currentUser ?? undefined}
             />
             <ChatWindow
                 loading={loading}

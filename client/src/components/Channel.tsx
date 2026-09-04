@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IChannel } from '../typings';
+import { IChannel, IUser } from '../typings';
 
 interface IChannelComponent extends IChannel {
     id?: number;
@@ -7,14 +7,15 @@ interface IChannelComponent extends IChannel {
     participants?: string[];
     selectChannel: (id?: number) => void;
     isSelected?: boolean;
+    currentUser?: IUser;
 }
 
-const Channel = ({ id, createdBy, participants, selectChannel, isSelected }: IChannelComponent) => (
+const Channel = ({ id, createdBy, participants, selectChannel, isSelected, currentUser }: IChannelComponent) => (
     <div
         className={'channel' + (isSelected ? ' channel--selected' : '')}
         onClick={() => selectChannel(id)}>
         <div>Channel id &#91;{id}&#93;</div>
-        <div className={'channel__user'}> Created by &#91;{createdBy}&#93; (You)</div>
+        <div className={'channel__user'}> Created by &#91;{createdBy}&#93; {(createdBy === currentUser?.name) ? ' (You)' : ''}</div>
         <div className={'channel__friend'}>
             {' '}
             Participants: <br />

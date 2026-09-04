@@ -8,7 +8,8 @@ const Sidebar = ({
     selectedChannelId,
     onCreateChannel,
     creatingChannel,
-    disabled
+    disabled,
+    currentUser
 }: ISidebar) => {
     return (
         <div className={'sidebar crt'}>
@@ -22,6 +23,7 @@ const Sidebar = ({
                             participants={c.participants}
                             selectChannel={selectChannel}
                             isSelected={c.id === selectedChannelId}
+                            currentUser={currentUser}
                         />
                     );
                 })}
