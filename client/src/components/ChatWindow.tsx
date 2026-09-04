@@ -20,7 +20,10 @@ const POST_MESSAGE = gql`
 `;
 
 const ChatWindow = ({ loading, selectedChannel, users, disabled }: IChatWindow) => {
-    const [postMessage] = useMutation(POST_MESSAGE);
+    const [postMessage] = useMutation(POST_MESSAGE, {
+        refetchQueries: ['GetUsers'],
+        awaitRefetchQueries: true
+    });
     const [messageToSend, setMessageToSend] = useState('');
 
     const { id: channelId, user, friend, messages } = selectedChannel ?? {

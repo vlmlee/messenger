@@ -96,9 +96,7 @@ const lowestChannelId = (channelList: { id: number }[]): number | null => {
 };
 
 export default () => {
-    const { loading, data } = useQuery(GET_ALL_USERS, {
-        pollInterval: 500
-    });
+    const { loading, data } = useQuery(GET_ALL_USERS);
     const [createUser, { loading: creatingUser }] = useMutation(CREATE_USER, {
         refetchQueries: [{ query: GET_ALL_USERS }]
     });
@@ -114,9 +112,7 @@ export default () => {
     const [currentUser, setCurrentUser] = useState<IUser | null>(readStoredUser);
     const [currentChannelId, setCurrentChannelId] = useState<number | null>(null);
     const [modalError, setModalError] = useState('');
-    const { data: channelsData, refetch: refetchChannels } = useQuery(GET_ALL_CHANNELS, {
-        pollInterval: 500
-    });
+    const { data: channelsData, refetch: refetchChannels } = useQuery(GET_ALL_CHANNELS);
 
     const hasValidatedSession = useRef(false);
     const switchingChannel = useRef(false);
@@ -124,8 +120,8 @@ export default () => {
     const users = data?.getAllUsers ?? [];
     const user = users.find((u: any) => u.id === currentUser?.id) ?? currentUser;
     const friend = users.find((u: any) => u.id !== currentUser?.id);
-    const rawChannels = channelsData?.getAllChannels ?? [];
-    const channels = rawChannels.map((c: any) => ({
+    const rawChannels = channelsData?.getAllChannels;
+    const channels = (rawChannels ?? []).map((c: any) => ({
         id: c.id,
         createdBy: mapIdToUser(c.createdBy, users)?.name ?? '',
         participants: c.participants.map((p: number) => mapIdToUser(p, users)?.name ?? '')
@@ -161,7 +157,7 @@ export default () => {
             return;
         }
 
-        const target = rawChannels.find((c: any) => c.id === id);
+        const target = (rawChannels ?? []).find((c: any) => c.id === id);
         const alreadyIn = (target?.participants ?? []).includes(currentUser.id);
 
         setCurrentChannelId(id);
@@ -227,7 +223,7 @@ export default () => {
 
         try {
             const { data: latestChannels } = await refetchChannels();
-            const allChannels = latestChannels?.getAllChannels ?? rawChannels;
+            const allChannels = latestChannels?.getAllChannels ?? rawChannels ?? [];
             const lowestId = lowestChannelId(allChannels);
             if (lowestId == null || !created?.id) {
                 return;
@@ -261,7 +257,7 @@ export default () => {
     }, [data, currentUser]);
 
     useEffect(() => {
-        if (currentChannelId != null || !currentUser?.id || !rawChannels.length) {
+        if (currentChannelId != null || !currentUser?.id || !rawChannels?.length) {
             return;
         }
         const participating = rawChannels.filter((c: any) =>

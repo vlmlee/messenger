@@ -4,7 +4,7 @@ import App from './App';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 
 const client = new ApolloClient({
-    uri: `${import.meta.env.VITE_API_URL}/graphql`,
+    uri: `https://messenger-7ixq.onrender.com/graphql`,
     cache: new InMemoryCache()
 });
 
