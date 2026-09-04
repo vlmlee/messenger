@@ -14,7 +14,7 @@ const Sidebar = ({
     return (
         <div className={'sidebar crt'}>
             <div className={'sidebar__channels'}>
-                {channels.map((c: IChannel) => {
+                {channels.sort((a: IChannel, b: IChannel) => (a.id ?? 0) - (b.id ?? 0)).map((c: IChannel) => {
                     return (
                         <Channel
                             key={c.id}
